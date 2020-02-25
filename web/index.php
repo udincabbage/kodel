@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "includes/lib.php"; ?> 
+<?php include "includes/lib.php"; ?>
 <?php include "includes/header.php"; ?>
 <body id="page-top">
 
@@ -10,7 +10,7 @@
 
 <?php include "includes/sidebar.php"; ?>
 
- 
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 

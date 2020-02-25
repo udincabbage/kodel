@@ -49,8 +49,10 @@ class Pengguna extends Model_Basic {
       $this->user=htmlspecialchars(strip_tags($this->user));
       $this->password=htmlspecialchars(strip_tags($this->password));
 
+      $password = md5($this->password);
+
       $stmt->bindParam(":user", $this->user);
-      $stmt->bindParam(":password", $this->password);
+      $stmt->bindParam(":password", $password);
 
       if($stmt->execute()){
         return $this->conn->lastInsertId();
