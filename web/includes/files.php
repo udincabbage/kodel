@@ -7,13 +7,17 @@ if(isset($_GET['p'])){
 			 case '' :
                 if(!file_exists ('pages/main.php')) die ($nopage);
                 include 'pages/main.php';
-				break; 
+				break;
 			case 'test':
 				include "pages/test.php";
 				break;
 			case 'table':
                 if(!file_exists ('pages/tables.php')) die ($nopage);
 				include "pages/tables.php";
+				break;
+			case 'register':
+                if(!file_exists ('pages/account/register.php')) die ($nopage);
+				echo "<meta http-equiv='refresh' content='1; url=./pages/account/register.php'> ";
 				break;
 			case 'anggota':
                 if(!file_exists ('pages/anggota.php')) die ($nopage);
