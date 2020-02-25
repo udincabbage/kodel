@@ -15,7 +15,7 @@ include "includes/conf.php";
 if(
   cekLevel(API_URL."pengguna/validate-token.php",1) ||
   cekLevel(API_URL."pengguna/validate-token.php",2)
-  ){
+){
   if(isset($_POST['Simpan'])) {
     $no_anggota = $_POST['no_anggota'];
     $tanggal_gabung = $_POST['tanggal_gabung'];
@@ -451,12 +451,17 @@ if(
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form method='post' action='' enctype="multipart/form-data">
+                        <div class="text-center">
+                          <p id="Avatar"></p>
+                          <img id="my_image<?php echo $id; ?>" class="card-img-top" src="img/pmii.png" onerror="fallbackImage()" style="width:50%">
+                        </div>
+                        <form enctype="multipart/form-data" onsubmit="startUpload();" action="pages/ajaxfile.php" method="post"  target="upload_target" >
                           <input type="hidden" name="id" value="<?php echo $id; ?>">
                           <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
+                          <!-- <input type="hidden" name="current_foto" id="current_foto" value="<?php echo $foto; ?>"> -->
                           <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                           <!-- Form -->
-                          Select file : <input type='file' name='file' id='file' class='form-control' ><br>
+                          Select file : <input type='file' name='file<?php echo $id?>' id='file<?php echo $id?>' class='form-control wadah-upload' accept="image/*" ><br>
                           <input type='button' class='btn btn-info' value='Upload' id='btn_upload'>
 
                           <!-- Preview-->
@@ -617,10 +622,22 @@ if(
     </form>
   </div>
 
-
+  <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
   <!-- Script -->
   <script type='text/javascript'>
+  document.addEventListener('change', function (event) {
+    if (event.target.matches('.wadah-upload')) {
+      // Run your code to open a modal
+      $('.wadah-upload').change(myUploadOnChangeFunction);
+      // myUploadOnChangeFunction();
+    }
+
+  }, false);
+
+
+
   $(document).ready(function(){
+    var dialog = null;
     $('#btn_upload').click(function(){
 
       var fd = new FormData();
@@ -638,6 +655,7 @@ if(
           if(response != 0){
             // Show image preview
             $('#preview').append("<img src='"+response+"' width='160' height='160' style='display: inline-block;'>");
+            console.log(response);
           }else{
             alert('file not uploaded');
           }
@@ -645,6 +663,66 @@ if(
       });
     });
   });
+
+  function fallbackImage() {
+    document.getElementById('my_image').src = 'img/pmii.png'
+  }
+
+  // $('#file').change(myUploadOnChangeFunction);
+
+  function createObjectURL(object) {
+    return (window.URL) ? window.URL.createObjectURL(object) : window.webkitURL.createObjectURL(object);
+  }
+
+  function revokeObjectURL(url) {
+    return (window.URL) ? window.URL.revokeObjectURL(url) : window.webkitURL.revokeObjectURL(url);
+  }
+
+  function myUploadOnChangeFunction() {
+    var id = this.name;
+    id = id.replace("file","");
+    console.log(id);
+    if(this.files.length) {
+      for(var i in this.files) {
+        if(this.files.hasOwnProperty(i)){
+          // console.log(i);
+          var src = createObjectURL(this.files[i]);
+          var image = new Image();
+          image.src = src;
+          $('#my_image'+id).attr('src', src);
+
+        }
+        // Do whatever you want with your image, it's just like any other image
+        // but it displays directly from the user machine, not the server!
+      }
+    }
+  }
+
+  function startUpload(){
+    // dialog = bootbox.dialog({
+    //   message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Sedang mengunggah data...</p>',
+    //   closeButton: false
+    // });
+
+    // do something in the background
+    return false;
+  }
+  function stopUpload(success,id){
+    var result = '';
+    // dialog.modal('hide');
+
+    if (success == 0){
+      $('#fotoModal'+id).modal('toggle');
+      // bootbox.alert("Upload berhasil");
+    }else if (success == 1){
+      bootbox.alert("Gagal upload");
+    }
+    else {
+      bootbox.alert("Error");
+    }
+
+    return true;
+  }
 </script>
 
 
