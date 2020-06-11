@@ -18,7 +18,7 @@ function getCookie(cname){
 
 var jwt = getCookie("jwt");
 if(jwt==""){
-  window.location.replace("pages/account/login.php");
+  window.location.replace("beranda.php");
 }
 </script>
 

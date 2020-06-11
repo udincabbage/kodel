@@ -34,7 +34,7 @@ $(document).ready(function(){
 
         		if(result.message=="Pendaftaran berhasil"){
         			// setCookie("jwt", result.jwt, 1);
-              // window.location.replace(MAIN_URL);
+               window.location.replace("login.php");
               bootbox.alert(result.message);
               
         		}else{

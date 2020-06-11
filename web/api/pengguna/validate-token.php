@@ -7,7 +7,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // required to decode jwt
-include_once '../api-config/database.php';
+include_once '../../includes/conf.php';
 include_once '../api-config/core.php';
 include_once '../api-libs/php-jwt-master/src/BeforeValidException.php';
 include_once '../api-libs/php-jwt-master/src/ExpiredException.php';

@@ -2,3 +2,35 @@
 .sidebar .sidebar-brand {
   height: 6.375rem; 
 }
+
+
+#gaya {
+	text-align:center;
+	perspective: 25px;
+}
+
+#koyo {  
+  transition: transform 0.5s; 
+}
+
+#image-preview{
+    display:none;
+    max-width : 400px; 
+}
+
+
+
+@media (min-width: 768px) { 
+
+.bg-login-image {
+  background: url("../img/pmii_black.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-register-image {
+  background: url("../img/pmii.png");
+  background-position: center;
+  background-size: cover;
+}
+}

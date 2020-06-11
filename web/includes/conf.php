@@ -9,10 +9,12 @@ if(($ippengguna=="::1")||($ippengguna=="127.0.0.1")) {
 if (!$konaksidb) {
   echo 'Failed Connection !';}
 
+  define("API_URL", "http://localhost/kader/web/api/");
+
   // $ippengguna=$_SERVER['REMOTE_ADDR'];
   // if(($ippengguna=="::1")||($ippengguna=="127.0.0.1")) {
     // // define("API_SINGKONG", "http://localhost/cabbagehirang/api/");
-    define("API_URL", "http://localhost/kodel/web/api/");
+    // define("API_SINGKONG", "https://singkron.lldikti11.or.id/api/");
     // define("API_ALBERDO", "http://localhost/alberdo/api/");
   // }else{
     // define("API_SINGKONG", "https://singkron.lldikti11.or.id/api/");

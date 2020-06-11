@@ -223,7 +223,7 @@ if(
 
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>No</th>
@@ -256,19 +256,31 @@ if(
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
 
-                if($foto==NULL) { $foto ='
-                  <a href="#" type="button" class="btn btn-warning btn-icon-split"  data-toggle="modal" data-target="#fotoModal'. $id.' ">
-                  <span class="icon ">! <i class="fas fa-user"></i></span>
+                if($foto==NULL) { $fotox ='
+                  <a href="#" type="button" class="btn btn-warning btn-icon-split text-center"  data-toggle="modal" data-target="#fotoModal'. $id.' ">
+                  <button class="btn btn-link  ">! <i class="fas fa-user"></i></button>
                   </a>
-                  ';}
+                  ';} else {
+                    $fotox ='
+                    <form method="POST" action="anggotadetail">
+                    <input type="hidden" name="id" value="'.$id.'" >
+                    <button type="submit"  class="btn btn-link mt-n3 mb-n4 "><img src="uploads/avatar/'.$foto.' " width="50px"></a></button>
+                    </form>
+                    ';
+                  }
                   ?>
                   <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $no_anggota; ?></td>
-                    <td><?php echo $nama; ?></td>
+                    <td>
+                      <form method="POST" action="anggotadetail">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>" >
+                        <button type="submit"  class="btn btn-link mt-n1 mb-n4 text-left"><?php echo $nama; ?></a></button>
+                      </form>
+                    </td>
                     <td><?php echo $telepon; ?></td>
                     <td><?php echo $asal_kampus; ?></td>
-                    <td><?php echo $foto; ?></td>
+                    <td align="center"><?php echo $fotox; ?></td>
                     <td><?php echo $status_anggota; ?></td>
                     <td>	<a href="#" type="button" class="btn btn-info btn-icon-split"  data-toggle="modal" data-target="#editModal<?php echo $id; ?>">
                       <span class="icon "><i class="fas fa-edit"></i></span>
@@ -339,7 +351,7 @@ if(
                             </div>
                             <div class="col-md-6">
                               <label for="tanggal_lahir" class="col-form-label">Tanggal Lahir</label>
-                              <input type="date" class="form-control"  min="<?php echo $maxage;?>" max="<?php echo $minage;?>"  id="tanggal_lahir" name="tanggal_lahir" value="<?php echo $tanggal_lahir; ?>" >
+                              <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="<?php echo $tanggal_lahir; ?>" >
                             </div>
                           </div>
                           <div class="form-group row">
@@ -451,17 +463,12 @@ if(
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="text-center">
-                          <p id="Avatar"></p>
-                          <img id="my_image<?php echo $id; ?>" class="card-img-top" src="img/pmii.png" onerror="fallbackImage()" style="width:50%">
-                        </div>
-                        <form enctype="multipart/form-data" onsubmit="startUpload();" action="pages/ajaxfile.php" method="post"  target="upload_target" >
+                        <form method='post' action='' enctype="multipart/form-data">
                           <input type="hidden" name="id" value="<?php echo $id; ?>">
                           <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
-                          <!-- <input type="hidden" name="current_foto" id="current_foto" value="<?php echo $foto; ?>"> -->
                           <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                           <!-- Form -->
-                          Select file : <input type='file' name='file<?php echo $id?>' id='file<?php echo $id?>' class='form-control wadah-upload' accept="image/*" ><br>
+                          Select file : <input type='file' name='file' id='file' class='form-control' ><br>
                           <input type='button' class='btn btn-info' value='Upload' id='btn_upload'>
 
                           <!-- Preview-->
@@ -622,22 +629,10 @@ if(
     </form>
   </div>
 
-  <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+
   <!-- Script -->
   <script type='text/javascript'>
-  document.addEventListener('change', function (event) {
-    if (event.target.matches('.wadah-upload')) {
-      // Run your code to open a modal
-      $('.wadah-upload').change(myUploadOnChangeFunction);
-      // myUploadOnChangeFunction();
-    }
-
-  }, false);
-
-
-
   $(document).ready(function(){
-    var dialog = null;
     $('#btn_upload').click(function(){
 
       var fd = new FormData();
@@ -655,7 +650,6 @@ if(
           if(response != 0){
             // Show image preview
             $('#preview').append("<img src='"+response+"' width='160' height='160' style='display: inline-block;'>");
-            console.log(response);
           }else{
             alert('file not uploaded');
           }
@@ -663,66 +657,6 @@ if(
       });
     });
   });
-
-  function fallbackImage() {
-    document.getElementById('my_image').src = 'img/pmii.png'
-  }
-
-  // $('#file').change(myUploadOnChangeFunction);
-
-  function createObjectURL(object) {
-    return (window.URL) ? window.URL.createObjectURL(object) : window.webkitURL.createObjectURL(object);
-  }
-
-  function revokeObjectURL(url) {
-    return (window.URL) ? window.URL.revokeObjectURL(url) : window.webkitURL.revokeObjectURL(url);
-  }
-
-  function myUploadOnChangeFunction() {
-    var id = this.name;
-    id = id.replace("file","");
-    console.log(id);
-    if(this.files.length) {
-      for(var i in this.files) {
-        if(this.files.hasOwnProperty(i)){
-          // console.log(i);
-          var src = createObjectURL(this.files[i]);
-          var image = new Image();
-          image.src = src;
-          $('#my_image'+id).attr('src', src);
-
-        }
-        // Do whatever you want with your image, it's just like any other image
-        // but it displays directly from the user machine, not the server!
-      }
-    }
-  }
-
-  function startUpload(){
-    // dialog = bootbox.dialog({
-    //   message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Sedang mengunggah data...</p>',
-    //   closeButton: false
-    // });
-
-    // do something in the background
-    return false;
-  }
-  function stopUpload(success,id){
-    var result = '';
-    // dialog.modal('hide');
-
-    if (success == 0){
-      $('#fotoModal'+id).modal('toggle');
-      // bootbox.alert("Upload berhasil");
-    }else if (success == 1){
-      bootbox.alert("Gagal upload");
-    }
-    else {
-      bootbox.alert("Error");
-    }
-
-    return true;
-  }
 </script>
 
 

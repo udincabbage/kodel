@@ -43,7 +43,7 @@ class Pengguna extends Model_Basic {
       $query = "INSERT INTO
       " . $this->nama_tabel . "
       SET
-      user=:user, password=:password, level='2'";
+      user=:user, password=:password, level='4'";
       $stmt = $this->conn->prepare($query);
 
       $this->user=htmlspecialchars(strip_tags($this->user));
