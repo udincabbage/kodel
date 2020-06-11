@@ -32,7 +32,7 @@ if(jwt==""){
   <div id="wrapper">
 
 
-<?php include "includes/sidebar.php"; ?>
+<?php include "includes/nav.php"; ?>
 
 
     <!-- Content Wrapper -->

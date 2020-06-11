@@ -63,6 +63,11 @@ if(isset($_GET['p'])){
 				include "pages/tertulis.php";
 				break;
 
+		case 'permohonan':
+        if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
+				include "pages/guest/permohonan.php";
+				break;
+
 
 				//end
 
