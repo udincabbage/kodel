@@ -36,7 +36,7 @@ $(document).ready(function(){
         			// setCookie("jwt", result.jwt, 1);
                window.location.replace("login.php");
               bootbox.alert(result.message);
-              
+
         		}else{
               bootbox.alert(result.message);
         		}
@@ -44,8 +44,7 @@ $(document).ready(function(){
         	},
         	error: function(xhr, resp, text){
             bootbox.alert(text);
-        		console.log(xhr);
-
+						console.log(xhr);
         	}
         });
 

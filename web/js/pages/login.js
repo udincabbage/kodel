@@ -41,7 +41,7 @@ $(document).ready(function(){
         },
         error: function(xhr, resp, text){
           bootbox.alert(text);
-          console.log(xhr);
+          console.log(API_URL+"pengguna/login.php");
 
         }
       });

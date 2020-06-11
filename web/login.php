@@ -43,16 +43,16 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        <h1><a href="./" class="scrollto"><span>Banjarkab</span>PMII</a></h1> 
+        <h1><a href="./" class="scrollto"><span>Banjarkab</span>PMII</a></h1>
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="beranda.php#hero">beranda</a></li>
-          <li><a href="#register">Gabung</a></li> 
+          <li><a href="#register">Gabung</a></li>
           <li><a href="beranda.php#about-us">Tentang Kami</a></li>
-          <li><a href="#afiliasi">Afiliasi</a></li> 
-          <li><a href="#team">Panitia</a></li> 
+          <li><a href="#afiliasi">Afiliasi</a></li>
+          <li><a href="#team">Panitia</a></li>
           <li><a href="beranda.php##blog">Berita</a></li>
           <li><a href="beranda.php##contact">Hubungi Kami</a></li>
           <li><a href="login.php">Login</a></li>
@@ -65,7 +65,7 @@
     Hero Section
   ============================-->
   <section id="hero" class="wow fadeIn">
-   
+
   <div class="container">
 
     <!-- Outer Row -->
@@ -119,20 +119,20 @@
   </div>
 
   </section><!-- #hero -->
- 
+
 
   <!--==========================
     Footer
   ============================-->
   <footer class="footer">
     <div class="container">
-       
+
     </div>
 
     <div class="copyrights">
       <div class="container">
         <p>2020 &copy; PKM Universitas Islam Kalimantan Muhammad Arsyad Al Banjari</p>
-        <div class="credits"> 
+        <div class="credits">
           Redesigned by <a href="https://teknobara.co.id/">nKIT</a>
         </div>
       </div>
@@ -160,8 +160,9 @@
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
 
+  <script src="vendor/bootbox/bootbox.min.js"></script>
   <script src="js/lib.js"></script>
   <script src="js/pages/login.js"></script>
-  
+
 </body>
 </html>

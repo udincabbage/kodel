@@ -1,0 +1,18 @@
+[11-Jun-2020 02:51:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/pmiibanj4r/public_html/pages/anggota.php:244
+Stack trace:
+#0 /home/pmiibanj4r/public_html/includes/files.php(74): include()
+#1 /home/pmiibanj4r/public_html/index.php(52): include('/home/pmiibanj4...')
+#2 {main}
+  thrown in /home/pmiibanj4r/public_html/pages/anggota.php on line 244
+[11-Jun-2020 02:52:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/pmiibanj4r/public_html/pages/anggota.php:244
+Stack trace:
+#0 /home/pmiibanj4r/public_html/includes/files.php(74): include()
+#1 /home/pmiibanj4r/public_html/index.php(52): include('/home/pmiibanj4...')
+#2 {main}
+  thrown in /home/pmiibanj4r/public_html/pages/anggota.php on line 244
+[11-Jun-2020 02:52:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/pmiibanj4r/public_html/pages/anggota.php:244
+Stack trace:
+#0 /home/pmiibanj4r/public_html/includes/files.php(74): include()
+#1 /home/pmiibanj4r/public_html/index.php(52): include('/home/pmiibanj4...')
+#2 {main}
+  thrown in /home/pmiibanj4r/public_html/pages/anggota.php on line 244

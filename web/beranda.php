@@ -51,10 +51,10 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="#hero">beranda</a></li>
-          <li><a href="#register">Gabung</a></li> 
+          <li><a href="#register">Gabung</a></li>
           <li><a href="#about-us">Tentang Kami</a></li>
-          <li><a href="#afiliasi">Afiliasi</a></li> 
-          <li><a href="#team">Panitia</a></li> 
+          <li><a href="#afiliasi">Afiliasi</a></li>
+          <li><a href="#team">Panitia</a></li>
           <!-- <li class="menu-has-children"><a href="">Drop Down</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -231,11 +231,11 @@
             <h4>Teknobara</h4>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
           </div>
-        </div> 
+        </div>
 
       </div>
     </div>
-  </section> 
+  </section>
 
   <!--==========================
     Video Section
@@ -333,8 +333,8 @@
       </div>
     </div>
   </section>
- 
- 
+
+
   <!--==========================
     Blog Section
   ============================-->
@@ -387,7 +387,7 @@
 
       </div>
     </div>
-  </section> 
+  </section>
 
   <!--==========================
     Contact Section
@@ -467,8 +467,8 @@
   ============================-->
   <footer class="footer">
     <div class="container">
-    
-    <!-- 
+
+    <!--
       <div class="row">
 
         <div class="col-md-12 col-lg-4">
@@ -541,14 +541,14 @@
         </div>
 
       </div>
-      
+
       -->
     </div>
 
     <div class="copyrights">
       <div class="container">
         <p>2020 &copy; Universitas Islam Kalimantan Muhammad Arsyad Al Banjari</p>
-        <div class="credits"> 
+        <div class="credits">
           Redesigned by <a href="https://teknobara.co.id/">nKIT</a>
         </div>
       </div>
@@ -575,6 +575,7 @@
 
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
+  <script src="vendor/bootbox/bootbox.min.js"></script>
   <script src="js/lib.js"></script>
   <script src="js/pages/register.js"></script>
 

@@ -5,7 +5,7 @@ $ippengguna=$_SERVER['REMOTE_ADDR'];
 if($ippengguna=="::1")
   $home_url="http://localhost/rintikhabang/api/";
 else {
-  $home_url="http://admin.sirintik.com/api/";
+  $home_url="http://pmii.banjar.teknobara.co.id/api/";
 }
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;

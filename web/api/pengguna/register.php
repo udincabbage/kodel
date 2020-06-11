@@ -37,7 +37,7 @@ if(
   }
   else{
     http_response_code(503);
-    echo json_encode(array("message" => "User gagal disimpan".$last_id));
+    echo json_encode(array("message" => "User gagal disimpan".$pengguna->user.$pengguna->password));
   }
 }else{
 
