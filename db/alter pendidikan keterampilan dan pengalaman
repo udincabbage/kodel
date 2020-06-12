@@ -1,0 +1,5 @@
+ALTER TABLE `pendidikan` ADD `nilai` ENUM('1','2','3','4','5') NULL DEFAULT NULL AFTER `file_bukti`, ADD `status_berkas` ENUM('pending','valid') NOT NULL DEFAULT 'pending' AFTER `nilai`; 
+
+ALTER TABLE `keterampilan` ADD `nilai` ENUM('1','2','3') NULL DEFAULT NULL AFTER `file_bukti`, ADD `status_berkas` ENUM('pending','valid') NOT NULL DEFAULT 'pending' AFTER `nilai`; 
+
+ALTER TABLE `pengalaman` ADD `nilai` ENUM('1','2','3') NULL DEFAULT NULL AFTER `file_bukti`, ADD `status_berkas` ENUM('pending','valid') NOT NULL DEFAULT 'pending' AFTER `nilai`; 
