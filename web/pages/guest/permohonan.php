@@ -34,12 +34,11 @@ if(
     $program_studi = $_POST['program_studi'];
     $motivasi = $_POST['motivasi'];
 
-
-    $mySql = "INSERT INTO `anggota` SET status = 0, no_anggota = 0,
-                id_pengguna = ?, nik = ?, nama = ?, email = ?,
-                jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
-                alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
-                asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ?";
+    $mySql = "INSERT INTO `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
+                 id_pengguna = ?, nik = ?, nama = ?, email = ?,
+                 jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
+                 alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
+                 asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ?";
     // $mySql = "INSERT INTO `anggota` SET (`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Daftar' ) ";
     $database = new Database();
     $db = $database->getConnection();
@@ -96,7 +95,7 @@ if(
     $program_studi = $_POST['program_studi'];
     $motivasi = $_POST['motivasi'];
 
-    $mySql = "UPDATE  `anggota` SET status = 0, no_anggota = 0,
+    $mySql = "UPDATE  `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
                 id_pengguna = ?, nik = ?, nama = ?, email = ?,
                 jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
                 alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
@@ -159,7 +158,7 @@ if(
 
 
   $status_form = TAMBAH;
-  $mySql = "SELECT A.* FROM anggota A WHERE id_pengguna = ?";
+  $mySql = "SELECT A.* FROM pendaftaran A WHERE id_pengguna = ?";
   $database = new Database();
   $db = $database->getConnection();
   $stmt = $db->prepare($mySql);
