@@ -77,6 +77,7 @@ if(isset($_POST['Edit'])) {
       $file_bukti_lama = $_POST['file_bukti_lama'];
       $userpic = $_POST['file_bukti_lama'];
       $keterangan = $_POST['keterangan'];
+      $nilai = $_POST['nilai'];
 
       $imgFile = $_FILES['file_bukti']['name'];
       $tmp_dir = $_FILES['file_bukti']['tmp_name'];
@@ -92,8 +93,9 @@ if(isset($_POST['Edit'])) {
 
          // file lawas
          $file_nama_ja = explode(".",$file_bukti_lama);
+         
          // rename uploading image
-         $userpic = $file_nama_ja[0].".".$imgExt;
+           $userpic = $id_anggota."_".date('ymd')."_".generateRandomString(4).".".$imgExt;
 
          // allow valid image file formats
          if(in_array($imgExt, $valid_extensions)){
@@ -111,7 +113,7 @@ if(isset($_POST['Edit'])) {
          }
 
 
-        $mySql = "UPDATE  `pendidikan` SET `id_anggota`=?, `tanggal_ijazah`=?, `nama_pendidikan`=?, `jenjang_pendidikan`=?, `keterangan`=?, `file_bukti`=? WHERE id=? ";
+        $mySql = "UPDATE  `pendidikan` SET `id_anggota`=?, `tanggal_ijazah`=?, `nama_pendidikan`=?, `jenjang_pendidikan`=?, `nilai`=?, `keterangan`=?, `file_bukti`=? WHERE id=? ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($mySql);
@@ -119,9 +121,10 @@ if(isset($_POST['Edit'])) {
         $stmt->bindParam(2, $tanggal_ijazah);
         $stmt->bindParam(3, $nama_pendidikan);
         $stmt->bindParam(4, $jenjang_pendidikan);
-        $stmt->bindParam(5, $keterangan);
-        $stmt->bindParam(6, $userpic);
-        $stmt->bindParam(7, $id);
+        $stmt->bindParam(5, $nilai);
+        $stmt->bindParam(6, $keterangan);
+        $stmt->bindParam(7, $userpic);
+        $stmt->bindParam(8, $id);
        $stmt->execute();
 
     if($stmt) {
@@ -163,12 +166,15 @@ if(isset($_POST['Hapus'])) {
         $id = $_POST['id'];
         $id_anggota = $_POST['id_anggota'];
         $nama = $_POST['nama'];
-
-        $mySql = "UPDATE pendidikan SET status=1 WHERE id=? ";
+        $nilai = $_POST['nilai'];
+        $status_berkas = "Diterima";
+        $mySql = "UPDATE pendidikan SET status=1, nilai=?, status_berkas=? WHERE id=? ";
           $database = new Database();
           $db = $database->getConnection();
           $stmt = $db->prepare($mySql);
-          $stmt->bindParam(1, $id);
+          $stmt->bindParam(1, $nilai);
+          $stmt->bindParam(2, $status_berkas);
+          $stmt->bindParam(3, $id); 
          $stmt->execute();
          if($stmt) {
 
@@ -231,9 +237,11 @@ if(isset($_POST['Hapus'])) {
                     <tr>
                       <th>No</th>
                       <th>Id Anggota</th>
-                      <th>Tempat</th>
                       <th>Jenjang</th>
+                      <th>Nama Pendidikan</th>
+                      <th>Keterangan</th>
                       <th>File Bukti</th>
+                      <th>Nilai</th>
                       <th>Status</th>
                       <th>Opsi</th>
                     </tr>
@@ -268,9 +276,11 @@ if(isset($_POST['Hapus'])) {
                           <button type="submit"  class="btn btn-link mt-n2 mb-n4 text-left"><?php echo $nama; ?></a></button>
                         </form>
                       </td>
-                      <td><?php echo $nama_pendidikan; ?></td>
                       <td><?php echo $jenjang_pendidikan; ?></td>
+                      <td><?php echo $nama_pendidikan; ?></td>
+                      <td><?php echo $keterangan; ?></td>
                       <td align="center"><a href="uploads/pendidikan/<?php echo $file_bukti; ?>" target="_blank"><img src="uploads/pendidikan/<?php echo $file_bukti ? $file_bukti : 'noimage.png'; ?>" width="50px"></a></td>
+                      <td><?php echo $nilai; ?></td>
                       <td><?php echo $statusx; ?></td>
                       <td>
                       <?php if($status==1) { ?>
@@ -340,9 +350,13 @@ if(isset($_POST['Hapus'])) {
                                   </div>
                                 </div>
                                 <div class="form-group row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-8">
                                     <label for="file_bukti" class="col-form-label">File Bukti</label>
                                   <input type="file" class="form-control" id="image-source" name="file_bukti" onchange="previewImage();"/>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="nilai" class="col-form-label">Nilai</label>
+                                  <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai">
                                   </div>
                                 </div>
                                 <div class="form-group-row">
