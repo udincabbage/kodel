@@ -66,7 +66,7 @@ if(isset($_POST['Simpan'])) {
       <?php
     }else{
       ?>
-      <div class="alert alert-success" role="alert">
+      <div class="alert alert-warning" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Gagal Simpan</strong>
       </div>
@@ -74,7 +74,7 @@ if(isset($_POST['Simpan'])) {
     }
   } else {
     ?>
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-warning" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>Terdapat Kesalahan File</strong>
     </div>
@@ -83,8 +83,6 @@ if(isset($_POST['Simpan'])) {
 }
 
 if(isset($_POST['Edit'])) {
-  print_r($_POST);
-  print_r($_FILES);
   $id = $_POST['id'];
   $id_anggota = $_POST['id_anggota'];
   $nama_pendidikan = $_POST['nama_pendidikan'];
@@ -101,17 +99,11 @@ if(isset($_POST['Edit'])) {
 
   if($_FILES['file_bukti']['size'] != 0){
     $upload_dir = 'uploads/pendidikan/'; // upload directory
-
     $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
     $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
     $file_nama_ja = explode(".",$file_bukti_lama);
-
-    // rename uploading image
     $userpic = $id_anggota."_".date('ymd')."_".generateRandomString(4).".".$imgExt;
-
-    // allow valid image file formats
     if(in_array($imgExt, $valid_extensions)){
-      // Check file size '5MB'
       if($imgSize < 5000000)    {
         move_uploaded_file($tmp_dir,$upload_dir.$userpic);
       }
@@ -124,28 +116,40 @@ if(isset($_POST['Edit'])) {
     }
   }
 
+  if(!isset($errMSG))
+  {
+    if($_FILES['file_bukti']['size'] != 0){
+      if(file_exists("uploads/pendidikan/".$file_bukti_lama)) {
+        unlink("uploads/pendidikan/".$file_bukti_lama);
+      }
+    }
 
+    $mySql = "UPDATE  `pendidikan` SET `id_anggota`=?, `tanggal_ijazah`=?, `nama_pendidikan`=?, `jenjang_pendidikan`=?, `nilai`=?, `keterangan`=?, `file_bukti`=? WHERE id=? ";
+    $database = new Database();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($mySql);
+    $stmt->bindParam(1, $id_anggota);
+    $stmt->bindParam(2, $tanggal_ijazah);
+    $stmt->bindParam(3, $nama_pendidikan);
+    $stmt->bindParam(4, $jenjang_pendidikan);
+    $stmt->bindParam(5, $nilai);
+    $stmt->bindParam(6, $keterangan);
+    $stmt->bindParam(7, $userpic);
+    $stmt->bindParam(8, $id);
 
-
-  $mySql = "UPDATE  `pendidikan` SET `id_anggota`=?, `tanggal_ijazah`=?, `nama_pendidikan`=?, `jenjang_pendidikan`=?, `nilai`=?, `keterangan`=?, `file_bukti`=? WHERE id=? ";
-  $database = new Database();
-  $db = $database->getConnection();
-  $stmt = $db->prepare($mySql);
-  $stmt->bindParam(1, $id_anggota);
-  $stmt->bindParam(2, $tanggal_ijazah);
-  $stmt->bindParam(3, $nama_pendidikan);
-  $stmt->bindParam(4, $jenjang_pendidikan);
-  $stmt->bindParam(5, $nilai);
-  $stmt->bindParam(6, $keterangan);
-  $stmt->bindParam(7, $userpic);
-  $stmt->bindParam(8, $id);
-  $stmt->execute();
-
-  if($stmt) {
+    if($stmt->execute()) {
+      ?>
+      <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Edit Data Pendidikan Berhasil!</strong>
+      </div>
+      <?php
+    }
+  } else {
     ?>
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-warning" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Edit Data Pendidikan Berhasil!</strong>
+      <strong>Terdapat Kesalahan File</strong>
     </div>
     <?php
   }
@@ -165,8 +169,8 @@ if(isset($_POST['Hapus'])) {
   $stmt->execute();
 
   if($stmt) {
-    if(file_exists("uploads/pengalaman/".$userpic)) {
-      unlink("uploads/pengalaman/".$userpic);
+    if(file_exists("uploads/pendidikan/".$userpic)) {
+      unlink("uploads/pendidikan/".$userpic);
     }
     ?>
     <div class="alert alert-success" role="alert">
@@ -372,7 +376,7 @@ include "includes/badge1.php";
                           </div>
                           <div class="col-md-4">
                             <label for="nilai" class="col-form-label">Nilai</label>
-                            <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai">
+                            <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai" required>
                           </div>
                         </div>
                         <div class="form-group-row">
@@ -386,7 +390,7 @@ include "includes/badge1.php";
                         <div class="form-group">
                           <label for="keterangan" class="col-form-label"> Keterangan </label>
                           <textarea class="form-control" id="keterangan" name="keterangan"> <?php echo $keterangan; ?> </textarea>
-                          <input type="text" name="file_bukti_lama" value="<?php echo $file_bukti ?>">
+                          <input type="hidden" name="file_bukti_lama" value="<?php echo $file_bukti ?>">
                         </div>
 
                         <div class="modal-footer">
