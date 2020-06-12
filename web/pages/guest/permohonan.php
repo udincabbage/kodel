@@ -214,15 +214,20 @@ if(
   $maxage = date('Y-m-d', strtotime('- 50 year', $now));
   ?>
 
-  <!-- Page Heading -->
+  <!-- Page Heading -->  
+            
+            
   <h1 class="h3 text-gray-800">Permohonan Anggota</h1>
-  <div class="row">
-    <div class="card shadow">
+  <div class="row"> 
+    <div class="card shadow col-md-10 mb-4">
+      <div class="card-body">
       <form method="post" action="" >
         <div class="form-group row">
+          <div class="col-md-12">
           <label for="nama" class="col-form-label">Nama</label>
           <input type="hidden" class="form-control" id="id_pengguna" name="id_pengguna" value="<?php echo $id_pengguna ?>">
           <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
+          </div>
         </div>
         <div class="form-group row">
           <div class="col-md-6">
@@ -305,6 +310,7 @@ if(
         </div>
       </form>
     </div>
+  </div>
   </div>
 
   <!-- Script -->

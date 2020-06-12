@@ -1,4 +1,6 @@
-
+ <?php
+include "includes/conf.php";
+?>
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -41,7 +43,7 @@
                   </div>
                   <div class="col-md-6">
                    <div class="text-center  mt-5 mb-4">
-                    <a href="#" class="btn btn-success btn-icon-split " data-toggle="modal" data-target="#anggotaModal">
+                    <a href="permohonan" class="btn btn-success btn-icon-split "  >
                       <span class="icon ">
                         <i class="fas fa-plus"></i>
                       </span>
