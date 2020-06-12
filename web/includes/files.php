@@ -63,6 +63,11 @@ if(isset($_GET['p'])){
 				include "pages/tertulis.php";
 				break;
 
+		case 'valpenerimaanview':
+        if(!file_exists ('pages/admin/validasi/valpenerimaanview.php')) die ($nopage);
+				include "pages/admin/validasi/valpenerimaanview.php";
+				break;
+
 		case 'permohonan':
         if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
 				include "pages/guest/permohonan.php";
@@ -72,7 +77,7 @@ if(isset($_GET['p'])){
         if(!file_exists ('pages/guest/awal.php')) die ($nopage);
 				include "pages/guest/awal.php";
 				break;
-				
+
 		case 'detailkader':
         if(!file_exists ('pages/guest/det_saya.php')) die ($nopage);
 				include "pages/guest/det_saya.php";
