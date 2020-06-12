@@ -8,6 +8,7 @@ $jsonDataEncoded = json_encode($jsonData);
 $url = "https://pmii.banjar.teknobara.co.id/api/pengguna/validate-token.php";
 $result_JSON = request_api($url,$jsonDataEncoded);
 $id = $result_JSON["data"]["id"];
+$idx = $result_JSON["data"]["id"];
 $user = $result_JSON["data"]["user"];
 
 $level = $result_JSON["data"]["level"];

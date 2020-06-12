@@ -419,7 +419,11 @@ if(isset($_POST['Hapus'])) {
                           <div class="form-group">
                             yakin merubah Status Verifikasi menjadi <?php  if($status==1) { echo "Tidak "; } ?>Aktif?
                           </div>
-
+                           
+                           <?php  if($status==0) {  ?> 
+                           <label for="nilai" class="col-form-label">Nilai <i>(Berikan nilai 1 - 5 </i></label>
+                           <input type="number" class="form-control" id="nilai" value=""  name="nilai" step="1" min="1" max="5">
+                           <?php  } ?> 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <?php  if($status==0) {

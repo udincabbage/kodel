@@ -78,8 +78,8 @@ if(isset($_GET['p'])){
 		//ampun anggota
 				
 		case 'detailkader':
-        if(!file_exists ('pages/guest/det_saya.php')) die ($nopage);
-				include "pages/guest/det_saya.php";
+        if(!file_exists ('pages/member/det_saya.php')) die ($nopage);
+				include "pages/member/det_saya.php";
 				break;
 				
 		case 'anggotaview':
