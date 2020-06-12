@@ -5,7 +5,7 @@ $jsonData = array(
   'jwt' => $jwt
 );
 $jsonDataEncoded = json_encode($jsonData);
-$url = "https://singkron.lldikti11.or.id/api/pengguna/validate-token.php";
+$url = "https://pmii.banjar.teknobara.co.id/api/pengguna/validate-token.php";
 $result_JSON = request_api($url,$jsonDataEncoded);
 $id = $result_JSON["data"]["id"];
 
