@@ -217,9 +217,9 @@ if(
   <!-- Page Heading -->  
             
             
-  <h1 class="h3 text-gray-800">Permohonan Anggota</h1>
+  <h1 class="h3 text-gray-800">Permohonan Anggota <small><sub>(<?php echo $id; ?>)</sub></small></h1>
   <div class="row"> 
-    <div class="card shadow col-md-10 mb-4">
+    <div class="card shadow col-md-12 mb-4">
       <div class="card-body">
       <form method="post" action="" >
         <div class="form-group row">

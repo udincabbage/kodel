@@ -72,6 +72,11 @@ if(isset($_GET['p'])){
         if(!file_exists ('pages/guest/awal.php')) die ($nopage);
 				include "pages/guest/awal.php";
 				break;
+				
+		case 'detailkader':
+        if(!file_exists ('pages/guest/det_saya.php')) die ($nopage);
+				include "pages/guest/det_saya.php";
+				break;
 
 
 				//end
