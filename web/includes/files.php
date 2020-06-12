@@ -64,10 +64,11 @@ if(isset($_GET['p'])){
 				break;
 
 		case 'valpenerimaanview':
-        if(!file_exists ('pages/admin/validasi/valpenerimaanview.php')) die ($nopage);
+        		if(!file_exists ('pages/admin/validasi/valpenerimaanview.php')) die ($nopage);
 				include "pages/admin/validasi/valpenerimaanview.php";
-				break;
-
+				break;	
+			
+			//ampun guest	
 		case 'permohonan':
         if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
 				include "pages/guest/permohonan.php";
@@ -78,12 +79,31 @@ if(isset($_GET['p'])){
 				include "pages/guest/awal.php";
 				break;
 
+		//ampun anggota
+				
 		case 'detailkader':
-        if(!file_exists ('pages/guest/det_saya.php')) die ($nopage);
-				include "pages/guest/det_saya.php";
+        if(!file_exists ('pages/member/det_saya.php')) die ($nopage);
+				include "pages/member/det_saya.php";
 				break;
-
-
+				
+		case 'anggotaview':
+        if(!file_exists ('pages/member/anggota_view.php')) die ($nopage);
+				include "pages/member/anggota_view.php";
+				break;
+		case 'pendidikanku':
+			if(!file_exists ('pages/member/pendidikan.php')) die ($nopage);
+			include "pages/member/pendidikan.php";
+			break;
+		case 'keterampilanku':
+			if(!file_exists ('pages/member/keterampilan.php')) die ($nopage);
+			include "pages/member/keterampilan.php";
+			break;
+		case 'pengalamanku':
+			if(!file_exists ('pages/member/pengalaman.php')) die ($nopage);
+			include "pages/member/pengalaman.php";
+			break;
+		
+		
 				//end
 
 			default:
