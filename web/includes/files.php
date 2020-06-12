@@ -68,6 +68,11 @@ if(isset($_GET['p'])){
 				include "pages/guest/permohonan.php";
 				break;
 
+		case 'kaderisasi':
+        if(!file_exists ('pages/guest/awal.php')) die ($nopage);
+				include "pages/guest/awal.php";
+				break;
+
 
 				//end
 
