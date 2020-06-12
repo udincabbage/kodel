@@ -2,44 +2,20 @@
 include "includes/conf.php"; 
 // if(isset($_POST['id'])) {
 	// $id = $_POST['id'];
-	$mySql = "SELECT anggota.* FROM anggota WHERE id=? ORDER BY updated_at DESC ";
+	$mySql = "SELECT anggota.*, pengguna.id AS idx FROM anggota 
+			LEFT JOIN pengguna ON pengguna.id=anggota.id_pengguna
+			WHERE pengguna.id=? ORDER BY updated_at DESC ";
 	$database = new Database();
 	$db = $database->getConnection();
 	$stmt = $db->prepare($mySql);
-	$stmt->bindParam(1, $id);
+	$stmt->bindParam(1, $idx);
 	$stmt->execute();  
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	extract($row); 
 	}
 // }
  $id_anggota = $id;
-
-//cung
-
- // $no_anggota = $_POST['no_anggota'];
-      // $tanggal_gabung = $_POST['tanggal_gabung'];
-      // $nama = $_POST['nama']; 
-      // // $id_pengguna = 2; 
-      // $username = $_POST['username']; 
-      // $password = $_POST['password']; 
-      // $nik = $_POST['nik']; 
-      // $jenis_kelamin = $_POST['jenis_kelamin']; 
-      // $tempat_ = $_POST['tempat_lahir']; 
-      // $tanggal_lahir = $_POST['tanggal_lahir']; 
-      // $telepon = $_POST['telepon']; 
-      // $email = $_POST['email']; 
-      // $alamat = $_POST['alamat']; 
-      // $desa = $_POST['desa']; 
-      // $kecamatan = $_POST['kecamatan']; 
-      // $kabupaten = $_POST['kabupaten']; 
-      // $asal_kampus = $_POST['asal_kampus']; 
-      // $fakultas = $_POST['fakultas']; 
-      // $program_studi = $_POST['program_studi']; 
-      // $bulan_mapaba = $_POST['bulan_mapaba']; 
-      // $tahun_mapaba = $_POST['tahun_mapaba']; 
-      // $motivasi = $_POST['motivasi']; 
-	  
-	  //cung end
+ 
 ?> 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -182,7 +158,7 @@ include "includes/conf.php";
                   <div class="card-body">
 				  <table class="table table-hover">
 				<?php 
-				// echo $nik;
+				 // echo $nik;
 				$Sql1 = "SELECT tes_tertulis.nilai AS nilai_tertulis, tes_wawancara.nilai AS nilai_wawancara FROM tes_tertulis LEFT JOIN tes_wawancara ON tes_wawancara.nik=tes_tertulis.nik WHERE tes_tertulis.nik=? ";
 				$database = new Database();
 				$db = $database->getConnection();
