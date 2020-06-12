@@ -203,7 +203,7 @@ if(
     $kabupaten = $row['kabupaten'];
     $asal_kampus = $row['asal_kampus'];
     $fakultas = $row['fakultas'];
-    $program_studi = $row['program_studi'];
+    $program_studi = $row['prodi'];
     $motivasi = $row['motivasi'];
   }
 
@@ -214,11 +214,11 @@ if(
   $maxage = date('Y-m-d', strtotime('- 50 year', $now));
   ?>
 
-  <!-- Page Heading -->  
-            
-            
+  <!-- Page Heading -->
+
+
   <h1 class="h3 text-gray-800">Permohonan Anggota <small><sub>(<?php echo $id; ?>)</sub></small></h1>
-  <div class="row"> 
+  <div class="row">
     <div class="card shadow col-md-12 mb-4">
       <div class="card-body">
       <form method="post" action="" >
