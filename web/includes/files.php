@@ -86,6 +86,18 @@ if(isset($_GET['p'])){
         if(!file_exists ('pages/member/anggota_view.php')) die ($nopage);
 				include "pages/member/anggota_view.php";
 				break;
+		case 'pendidikanku':
+			if(!file_exists ('pages/member/pendidikan.php')) die ($nopage);
+			include "pages/member/pendidikan.php";
+			break;
+		case 'keterampilanku':
+			if(!file_exists ('pages/member/keterampilan.php')) die ($nopage);
+			include "pages/member/keterampilan.php";
+			break;
+		case 'pengalamanku':
+			if(!file_exists ('pages/member/pengalaman.php')) die ($nopage);
+			include "pages/member/pengalaman.php";
+			break;
 		
 		
 				//end
