@@ -25,7 +25,7 @@
 
       <!-- Nav Anggota -->
       <li class="nav-item">
-        <a class="nav-link" href="anggota">
+        <a class="nav-link" href="anggotaview">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Anggota</span></a>
       </li>

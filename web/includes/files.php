@@ -62,7 +62,9 @@ if(isset($_GET['p'])){
                 if(!file_exists ('pages/tertulis.php')) die ($nopage);
 				include "pages/tertulis.php";
 				break;
-
+			
+			
+			//ampun guest	
 		case 'permohonan':
         if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
 				include "pages/guest/permohonan.php";
@@ -72,13 +74,20 @@ if(isset($_GET['p'])){
         if(!file_exists ('pages/guest/awal.php')) die ($nopage);
 				include "pages/guest/awal.php";
 				break;
+
+		//ampun anggota
 				
 		case 'detailkader':
         if(!file_exists ('pages/guest/det_saya.php')) die ($nopage);
 				include "pages/guest/det_saya.php";
 				break;
-
-
+				
+		case 'anggotaview':
+        if(!file_exists ('pages/member/anggota_view.php')) die ($nopage);
+				include "pages/member/anggota_view.php";
+				break;
+		
+		
 				//end
 
 			default:
