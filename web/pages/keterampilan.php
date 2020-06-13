@@ -513,7 +513,7 @@ $maxage = date('Y-m-d', strtotime('- 50 year', $now));
           </div>
           <div class="form-group">
             <label for="keterangan" class="col-form-label">Keterangan</label>
-            <textarea class="form-control" id="keterangan" name="keterangan"> <?php echo $keterangan; ?> </textarea>
+            <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
           </div>
 
         </div>

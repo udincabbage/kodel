@@ -336,7 +336,7 @@ include "includes/badge1.php";
                         <input type="hidden" name="id_anggota" value="<?php echo $id_anggota; ?>">
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <div class="form-group row">
-                          <div class="col-md-6">
+                        <!--   <div class="col-md-6">
                             <label for="id_anggota" class="col-form-label">Anggota</label>
                             <select class="form-control" name="id_anggota" id="id_anggota">
                               <option value="">--Pilih Anggota--</option>
@@ -352,9 +352,11 @@ include "includes/badge1.php";
                                 ?>
                                 <option value="<?php echo $rowa['id']; ?>" <?php echo $selected ?>><?php echo $rowa['nama']; ?></option>
                               <?php } ?>
-                            </select>
-                          </div>
-                          <div class="col-md-6">
+                            </select> 
+                          </div> -->
+                            <input type="hidden"  value="<?php echo $id_anggota; ?>"  class="form-control" id="id_anggota" name="id_anggota">
+                            
+                          <div class="col-md-12">
                             <label for="nama_pendidikan" class="col-form-label">Nama Pendidikan</label>
                             <input type="text"  value="<?php echo $nama_pendidikan; ?>"  class="form-control" id="nama_pendidikan" name="nama_pendidikan">
                           </div>
@@ -362,7 +364,14 @@ include "includes/badge1.php";
                         <div class="form-group row">
                           <div class="col-md-8">
                             <label for="jenjang_pendidikan" class="col-form-label">Jenjang Pendidikan</label>
-                            <input type="text" class="form-control" id="jenjang_pendidikan" value="<?php echo $jenjang_pendidikan; ?>"  name="jenjang_pendidikan">
+                            <select class="form-control selectpicker" name="jenjang_pendidikan" data-live-search="true">
+                              <option value="">--Pilih Nama Jenjang--</option>
+                              <option value="SD" <?php if($jenjang_pendidikan=="SD") echo "selected"; ?>>Sekolah Dasar (SD)</option>
+                              <option value="SMP" <?php if($jenjang_pendidikan=="SMP") echo "selected"; ?>>Sekolah Menengah Pertama (SMP)</option>
+                              <option value="SMA" <?php if($jenjang_pendidikan=="SMA") echo "selected"; ?>>Sekolah Menengah ATAS/Kejuruan (SMA)</option> 
+                              <option value="S1" <?php if($jenjang_pendidikan=="S1") echo "selected"; ?>>Sekolah Tinggi Strata I (S1)</option> 
+                              <option value="S2" <?php if($jenjang_pendidikan=="S2") echo "selected"; ?>>Sekolah Tinggi Strata II (S2)</option> 
+                              </select> 
                           </div>
                           <div class="col-md-4">
                             <label for="tanggal_ijazah" class="col-form-label">Tanggal Ijazah</label>
@@ -498,7 +507,7 @@ include "includes/badge1.php";
       <div class="modal-body"><p>Tambahkan data Anggota, data anggota akan langsung aktif dan dapat mengakses sesuai username dan password terinput.</p>
         <form role="form" action="" method="post" enctype="multipart/form-data">
           <div class="form-group row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="id_anggota" class="col-form-label">Id Anggota</label>
               <select class="form-control selectpicker" data-live-search="true" name="id_anggota" id="id_anggota">
                 <option value="">--Pilih Anggota--</option>
@@ -515,15 +524,22 @@ include "includes/badge1.php";
                 <?php } ?>
               </select>
             </div>
-            <div class="col-md-6">
-              <label for="nama_pendidikan" class="col-form-label">Nama Pendidikan</label>
+            <div class="col-md-8">
+              <label for="nama_pendidikan" class="col-form-label">Nama / Tempat Pendidikan</label>
               <input type="text"  value=""  class="form-control" id="nama_pendidikan" name="nama_pendidikan">
             </div>
           </div>
           <div class="form-group row">
             <div class="col-md-8">
               <label for="jenjang_pendidikan" class="col-form-label">Jenjang Pendidikan</label>
-              <input type="text" class="form-control" id="jenjang_pendidikan" value=""  name="jenjang_pendidikan">
+             <select class="form-control selectpicker" name="jenjang_pendidikan" data-live-search="true">
+                <option value="">--Pilih Nama Jenjang--</option>
+                <option value="SD">Sekolah Dasar (SD)</option>
+                <option value="SMP">Sekolah Menengah Pertama (SMP)</option>
+                <option value="SMA">Sekolah Menengah ATAS/Kejuruan (SMA)</option> 
+                <option value="S1">Sekolah Tinggi Strata I (S1)</option> 
+                <option value="S2">Sekolah Tinggi Strata II (S2)</option> 
+                </select>
             </div>
             <div class="col-md-4">
               <label for="tanggal_ijazah" class="col-form-label">Tanggal Ijazah</label>
@@ -545,7 +561,7 @@ include "includes/badge1.php";
           </div>
 
           <div class="form-group">
-            <label for="keterangan" class="col-form-label"> Keterangan </label>
+            <label for="keterangan" class="col-form-label"> Keterangan (Jurusan/Program Studi)</label>
             <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
           </div>
 
