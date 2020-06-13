@@ -216,13 +216,7 @@ if(isset($_POST['Non-Aktif'])) {
   <div class="col-md-10">
     <p class="mb-4">Data Keterampilan merupakan data keterampilan dari seluruh anggota / kader yang ada pada aplikasi ini. Data yang keterampilanya perlu proses verifikasi admin untuk dapat diterima sebagai pengalaman.</p>
   </div>
-  <div class="col-md-2">
-    <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#tambahModal">
-      <span class="icon ">
-        <i class="fas fa-plus"></i>
-      </span>
-      <span class="text">Tambah Data</span>
-    </a>
+  <div class="col-md-2"> 
   </div>
 </div>
 
@@ -253,7 +247,9 @@ if(isset($_POST['Non-Aktif'])) {
 
         <?php
         // echo $id;
-        $Sql2 = "SELECT keterampilan.*, anggota.id AS id_anggota, anggota.nama FROM keterampilan LEFT JOIN anggota ON anggota.id=keterampilan.id_anggota ORDER BY updated_at DESC ";
+        $Sql2 = "SELECT keterampilan.*, anggota.id AS id_anggota, anggota.nama FROM keterampilan LEFT JOIN anggota ON anggota.id=keterampilan.id_anggota 
+        WHERE keterampilan.status=0 
+        ORDER BY updated_at DESC ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt2 = $db->prepare($Sql2);

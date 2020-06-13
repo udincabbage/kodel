@@ -251,7 +251,9 @@ if(isset($_POST['Non-Aktif'])) {
                   
                   <?php 
 				 // echo $id;
-				$Sql2 = "SELECT pengalaman.*, anggota.id AS id_anggota, anggota.nama FROM pengalaman LEFT JOIN anggota ON anggota.id=pengalaman.id_anggota ORDER BY updated_at DESC ";
+				$Sql2 = "SELECT pengalaman.*, anggota.id AS id_anggota, anggota.nama FROM pengalaman LEFT JOIN anggota ON anggota.id=pengalaman.id_anggota 
+              WHERE keterampilan.status=1 
+              ORDER BY updated_at DESC ";
 				$database = new Database();
 				$db = $database->getConnection();
 				$stmt2 = $db->prepare($Sql2);

@@ -266,7 +266,9 @@ include "includes/badge1.php";
         </thead>
         <tbody>
           <?php
-          $mySql = "SELECT pendidikan.*, anggota.id AS id_anggota, anggota.nama FROM pendidikan LEFT JOIN anggota ON anggota.id=pendidikan.id_anggota ORDER BY updated_at DESC";
+          $mySql = "SELECT pendidikan.*, anggota.id AS id_anggota, anggota.nama FROM pendidikan LEFT JOIN anggota ON anggota.id=pendidikan.id_anggota 
+          WHERE pendidikan.status=1 
+          ORDER BY updated_at DESC";
           $database = new Database();
           $db = $database->getConnection();
           $stmt = $db->prepare($mySql);
