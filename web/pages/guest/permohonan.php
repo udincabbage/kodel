@@ -35,10 +35,10 @@ if(
     $motivasi = $_POST['motivasi'];
 
     $mySql = "INSERT INTO `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
-                 id_pengguna = ?, nik = ?, nama = ?, email = ?,
-                 jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
-                 alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
-                 asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ?";
+    id_pengguna = ?, nik = ?, nama = ?, email = ?,
+    jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
+    alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
+    asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ?";
     // $mySql = "INSERT INTO `anggota` SET (`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Daftar' ) ";
     $database = new Database();
     $db = $database->getConnection();
@@ -96,10 +96,10 @@ if(
     $motivasi = $_POST['motivasi'];
 
     $mySql = "UPDATE  `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
-                id_pengguna = ?, nik = ?, nama = ?, email = ?,
-                jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
-                alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
-                asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ? WHERE id_pengguna = ?";
+    id_pengguna = ?, nik = ?, nama = ?, email = ?,
+    jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
+    alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
+    asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ? WHERE id_pengguna = ?";
     // $mySql = "INSERT INTO `anggota` SET (`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Daftar' ) ";
     $database = new Database();
     $db = $database->getConnection();
@@ -215,101 +215,140 @@ if(
 
   <!-- Page Heading -->
 
-
-  <h1 class="h3 text-gray-800">Permohonan Anggota <small><sub>(<?php echo $id; ?>)</sub></small></h1>
   <div class="row">
-    <div class="card shadow col-md-12 mb-4">
-      <div class="card-body">
-      <form method="post" action="" >
-        <div class="form-group row">
-          <div class="col-md-12">
-          <label for="nama" class="col-form-label">Nama</label>
-          <input type="hidden" class="form-control" id="id_pengguna" name="id_pengguna" value="<?php echo $id_pengguna ?>">
-          <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="nik" class="col-form-label">Nomor Induk Kependudukan (KTP)</label>
-            <input type="text" class="form-control" id="nik" name="nik" value="<?php echo $nik ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
-            <div class="radio">
-              <label class="radio-inline"><input type="radio" name="jenis_kelamin" value="Laki-laki" <?php if($jenis_kelamin=="Laki-laki") echo " checked" ?>> Laki-laki </label>&nbsp;&nbsp;&nbsp;
-              <label class="radio-inline"><input type="radio" value="Perempuan" name="jenis_kelamin"  <?php if($jenis_kelamin=="Perempuan") echo " checked" ?>> Perempuan</label>
+    <h1 class="h3 text-gray-800">Permohonan Anggota <small><sub>(<?php echo $id; ?>)</sub></small></h1>
+    <?php if($status_form == UBAH) {
+      ?>
+      <button type="submit"  class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#konfirmModal">
+        <span class="icon ">
+          <i class="fas fa-list"></i>
+        </span>
+        <span class="text">
+          Tes Tertulis
+        </span>
+      </button>
+      <div class="modal fade" id="konfirmModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="pendidikanModalLabel">Konfirmasi</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form role="form" action="guesttestertulis" method="post">
+                <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
+                <div class="form-group">
+                  Sudah siap mengambil tes tertulis ?
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" name="Hapus" class="btn btn-success">Siap</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="tempat_lahir" class="col-form-label">Tempat Lahir</label>
-            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="<?php echo $tempat_lahir ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="tanggal_lahir" class="col-form-label">Tanggal Lahir</label>
-            <input type="date" class="form-control"  value="<?php echo $minage;?>"  min="<?php echo $maxage;?>" max="<?php echo $minage;?>"  id="tanggal_lahir" name="tanggal_lahir">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="telepon" class="col-form-label">Telepon</label>
-            <input type="text" class="form-control" id="telepon" name="telepon"  value="<?php echo $telepon ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="email" class="col-form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email"  value="<?php echo $email ?>">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="alamat" class="col-form-label">Alamat </label>
-          <textarea class="form-control" id="alamat" name="alamat"> <?php echo $alamat ?></textarea>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-4">
-            <label for="desa" class="col-form-label">Desa/Kelurahan</label>
-            <input type="text" class="form-control" id="desa" name="desa"  value="<?php echo $desa ?>">
-          </div>
-          <div class="col-md-4">
-            <label for="kecamatan" class="col-form-label">Kecamatan</label>
-            <input type="text" class="form-control" id="kecamatan" name="kecamatan"  value="<?php echo $kecamatan ?>">
-          </div>
-          <div class="col-md-4">
-            <label for="kabupaten" class="col-form-label">Kabupaten</label>
-            <input type="text" class="form-control" id="kabupaten" name="kabupaten"  value="<?php echo $kabupaten ?>">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="asal_kampus" class="col-form-label">Asal Komisariat / Kampus</label>
-          <input type="text" class="form-control" id="asal_kampus" name="asal_kampus" value="<?php echo $asal_kampus ?>">
-        </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="fakultas" class="col-form-label">Fakultas</label>
-            <input type="text" class="form-control" id="fakultas" name="fakultas"  value="<?php echo $fakultas ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="program_studi" class="col-form-label">Program Studi</label>
-            <input type="text" class="form-control" id="program_studi" name="program_studi"  value="<?php echo $program_studi ?>">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="motivasi" class="col-form-label"> Motivasi </label>
-          <textarea class="form-control" id="motivasi" name="motivasi"><?php echo $motivasi ?></textarea>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <?php
-          if($status_form == TAMBAH){
-            echo  "<button class=\"btn btn-success\" name=\"Simpan\" type=\"submit\" >Simpan</button>";
-          }else{
-            echo  "<button class=\"btn btn-success\" name=\"Edit\" type=\"submit\" >Simpan Edit</button>";
-          }
-          ?>
-        </div>
-      </form>
-    </div>
+      </div>
+      <?php
+    }?>
   </div>
+  <div class="row">
+    <div class="card shadow col-md-12 mb-4">
+      <div class="card-body">
+        <form method="post" action="" >
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="nama" class="col-form-label">Nama</label>
+              <input type="hidden" class="form-control" id="id_pengguna" name="id_pengguna" value="<?php echo $id_pengguna ?>">
+              <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="nik" class="col-form-label">Nomor Induk Kependudukan (KTP)</label>
+              <input type="text" class="form-control" id="nik" name="nik" value="<?php echo $nik ?>">
+            </div>
+            <div class="col-md-6">
+              <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
+              <div class="radio">
+                <label class="radio-inline"><input type="radio" name="jenis_kelamin" value="Laki-laki" <?php if($jenis_kelamin=="Laki-laki") echo " checked" ?>> Laki-laki </label>&nbsp;&nbsp;&nbsp;
+                <label class="radio-inline"><input type="radio" value="Perempuan" name="jenis_kelamin"  <?php if($jenis_kelamin=="Perempuan") echo " checked" ?>> Perempuan</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="tempat_lahir" class="col-form-label">Tempat Lahir</label>
+              <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="<?php echo $tempat_lahir ?>">
+            </div>
+            <div class="col-md-6">
+              <label for="tanggal_lahir" class="col-form-label">Tanggal Lahir</label>
+              <input type="date" class="form-control"  value="<?php echo $minage;?>"  min="<?php echo $maxage;?>" max="<?php echo $minage;?>"  id="tanggal_lahir" name="tanggal_lahir">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="telepon" class="col-form-label">Telepon</label>
+              <input type="text" class="form-control" id="telepon" name="telepon"  value="<?php echo $telepon ?>">
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="col-form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email"  value="<?php echo $email ?>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="alamat" class="col-form-label">Alamat </label>
+            <textarea class="form-control" id="alamat" name="alamat"> <?php echo $alamat ?></textarea>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4">
+              <label for="desa" class="col-form-label">Desa/Kelurahan</label>
+              <input type="text" class="form-control" id="desa" name="desa"  value="<?php echo $desa ?>">
+            </div>
+            <div class="col-md-4">
+              <label for="kecamatan" class="col-form-label">Kecamatan</label>
+              <input type="text" class="form-control" id="kecamatan" name="kecamatan"  value="<?php echo $kecamatan ?>">
+            </div>
+            <div class="col-md-4">
+              <label for="kabupaten" class="col-form-label">Kabupaten</label>
+              <input type="text" class="form-control" id="kabupaten" name="kabupaten"  value="<?php echo $kabupaten ?>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="asal_kampus" class="col-form-label">Asal Komisariat / Kampus</label>
+            <input type="text" class="form-control" id="asal_kampus" name="asal_kampus" value="<?php echo $asal_kampus ?>">
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="fakultas" class="col-form-label">Fakultas</label>
+              <input type="text" class="form-control" id="fakultas" name="fakultas"  value="<?php echo $fakultas ?>">
+            </div>
+            <div class="col-md-6">
+              <label for="program_studi" class="col-form-label">Program Studi</label>
+              <input type="text" class="form-control" id="program_studi" name="program_studi"  value="<?php echo $program_studi ?>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="motivasi" class="col-form-label"> Motivasi </label>
+            <textarea class="form-control" id="motivasi" name="motivasi"><?php echo $motivasi ?></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            <?php
+            if($status_form == TAMBAH){
+              echo  "<button class=\"btn btn-success\" name=\"Simpan\" type=\"submit\" >Simpan</button>";
+            }else{
+              echo  "<button class=\"btn btn-success\" name=\"Edit\" type=\"submit\" >Simpan Edit</button>";
+            }
+            ?>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <!-- Script -->
@@ -351,9 +390,9 @@ window.setTimeout(function() {
 </script>
 
 <script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
 </script>
 <?php
 }else{
