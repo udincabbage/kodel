@@ -77,6 +77,7 @@ if(isset($_POST['Edit'])) {
   $file_bukti_lama = $_POST['file_bukti_lama'];
   $userpic = $_POST['file_bukti_lama'];
   $status = $_POST['status'];
+  $nilai = $_POST['nilai'];
 
   $imgFile = $_FILES['file_bukti']['name'];
   $tmp_dir = $_FILES['file_bukti']['tmp_name'];
@@ -111,16 +112,17 @@ if(isset($_POST['Edit'])) {
   }
 
 
-  $mySql = "UPDATE  keterampilan SET  tanggal_bukti=?, nama_keterampilan=?, keterangan=?, file_bukti=?, status=? WHERE id=? ";
+  $mySql = "UPDATE  keterampilan SET  tanggal_bukti=?, nama_keterampilan=?, `nilai`=?, keterangan=?, file_bukti=?, status=? WHERE id=? ";
   $database = new Database();
   $db = $database->getConnection();
   $stmt = $db->prepare($mySql);
   $stmt->bindParam(1, $tanggal_bukti);
   $stmt->bindParam(2, $nama_keterampilan);
-  $stmt->bindParam(3, $keterangan);
-  $stmt->bindParam(4, $userpic);
-  $stmt->bindParam(5, $status);
-  $stmt->bindParam(6, $id);
+  $stmt->bindParam(3, $nilai);
+  $stmt->bindParam(4, $keterangan);
+  $stmt->bindParam(5, $userpic);
+  $stmt->bindParam(6, $status);
+  $stmt->bindParam(7, $id);
   $stmt->execute();
 
   if($stmt) {
@@ -162,19 +164,23 @@ if(isset($_POST['Aktif'])) {
   $id = $_POST['id'];
   $id_anggota = $_POST['id_anggota'];
   $nama = $_POST['nama'];
+  $nilai = $_POST['nilai'];
+  $status_berkas = "Diterima";
 
-  $mySql = "UPDATE keterampilan SET status=1 WHERE id=? ";
+  $mySql = "UPDATE keterampilan SET status=1, nilai=?, status_berkas=? WHERE id=? ";
   $database = new Database();
   $db = $database->getConnection();
   $stmt = $db->prepare($mySql);
-  $stmt->bindParam(1, $id);
+  $stmt->bindParam(1, $nilai);
+  $stmt->bindParam(2, $status_berkas);
+  $stmt->bindParam(3, $id); 
   $stmt->execute();
   if($stmt) {
 
     ?>
     <div class="alert alert-success" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Ubah Status Berhasil!</strong> Keterampilan oleh <?php echo $nama; ?> telah di Aktifkan!
+      <strong>Ubah Status Berhasil!</strong> Keterampilan oleh <?php echo $nama; ?> deng id <?php echo $id; ?>  telah di Aktifkan!
     </div>
     <?php
   }
@@ -237,6 +243,7 @@ if(isset($_POST['Non-Aktif'])) {
             <th>Keterangan</th>
             <th>Tanggal Bukti</th>
             <th>File Bukti</th>
+            <th>Nilai</th>
             <th>Status</th>
             <th>Opsi</th>
           </tr>
@@ -278,6 +285,7 @@ if(isset($_POST['Non-Aktif'])) {
               <td><?php echo $keterangan; ?></td>
               <td><?php echo indonesiaTgl($tanggal_bukti); ?></td>
               <td align="center"><a href="uploads/keterampilan/<?php echo $file_bukti; ?>" target="_blank"><img src="uploads/keterampilan/<?php echo $file_bukti ? $file_bukti : 'noimage.png'; ?>" width="50px"></a></td>
+              <td><?php echo $nilai; ?></td>
               <td><?php echo $statusx; ?></td>
               <td>
                 <?php if($status==1) { ?>
@@ -329,24 +337,33 @@ if(isset($_POST['Non-Aktif'])) {
                         <div class="col-md-6">
                           <label for="file_bukti" class="col-form-label">File Bukti</label>
                           <input type="file" class="form-control" id="image-source" name="file_bukti" onchange="previewImage();"/>
-                        </div>
-                        <div class="form-group">
+                        </div> 
+                      <div class="col-md-6">
+                            <label for="nilai" class="col-form-label">Nilai</label>
+                          <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai">
+                          </div>
+                        
+                      </div>         
+                        <div class="form-group row">
+                          <div class="col-md-12">
                           <center>
                             <img id="image-preview" alt="image preview"/>
                           </center>
                         </div>
-                        <div class="form-group">
+                        </div>
+                        <div class="form-group row">  
+                        <div class="col-md-8">
                           <label for="keterangan" class="col-form-label">Keterangan</label>
                           <textarea class="form-control" id="keterangan" name="keterangan"> <?php echo $keterangan; ?> </textarea>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <label for="status" class="col-form-label">Status Verifikasi</label>
                           <select class="form-control" name="status">
                             <option value="1" <?php if($status==1) {echo "selected";}?> > Aktif</option>
                             <option value="0" <?php if($status==0) {echo "selected";}?> > Pending</option>
                           </select>
                         </div>
-                      </div>
+                        </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" name="Edit" class="btn btn-success">Simpan</button>
@@ -407,7 +424,10 @@ if(isset($_POST['Non-Aktif'])) {
                       <div class="form-group">
                         yakin merubah Status Verifikasi menjadi <?php  if($status==1) { echo "Tidak "; } ?>Aktif?
                       </div>
-
+                      <?php  if($status==0) {  ?> 
+                         <label for="nilai" class="col-form-label">Nilai <i>(Berikan nilai 1 - 5) </i></label>
+                         <input type="number" class="form-control" id="nilai" value=""  name="nilai" step="1" min="1" max="5">
+                         <?php  } ?> 
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <?php  if($status==0) {

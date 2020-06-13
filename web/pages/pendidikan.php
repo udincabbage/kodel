@@ -435,7 +435,7 @@ if(isset($_POST['Hapus'])) {
                           </div>
                            
                            <?php  if($status==0) {  ?> 
-                           <label for="nilai" class="col-form-label">Nilai <i>(Berikan nilai 1 - 5 </i></label>
+                           <label for="nilai" class="col-form-label">Nilai <i>(Berikan nilai 1 - 5) </i></label>
                            <input type="number" class="form-control" id="nilai" value=""  name="nilai" step="1" min="1" max="5">
                            <?php  } ?> 
                           <div class="modal-footer">
