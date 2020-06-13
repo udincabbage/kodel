@@ -4,6 +4,7 @@ include "includes/conf.php";
 define("TAMBAH", 1);
 define("UBAH", 2);
 define("TERDAFTAR", 3);
+define("SUDAH_TES_TERTULIS", 4);
 
 $jwt = $_COOKIE['jwt'];
 $jsonData = array(
@@ -168,8 +169,22 @@ if(
   if($num>0){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $status_form = ($row['status']==1) ? TERDAFTAR : UBAH;
+
+    $mySql = "SELECT A.* FROM pengguna_soal A WHERE id_pengguna = ?";
+    $database = new Database();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($mySql);
+    $stmt->bindParam(1, $id_pengguna);
+    $stmt->execute();
+    $num = $stmt->rowCount();
+    if($num>0){
+      $status_form = SUDAH_TES_TERTULIS;
+    }
   }
 
+  if($status_form == TERDAFTAR){
+    echo "<meta http-equiv='refresh' content='0; url=unauthorized'> ";
+  }
 
   $nama = isset($_POST['nama']) ? $_POST['nama'] : '' ;
   // $id_pengguna = isset($_POST['id_pengguna']) ? $_POST['id_pengguna'] : '';
@@ -188,7 +203,7 @@ if(
   $program_studi = isset($_POST['program_studi']) ? $_POST['program_studi'] : '';
   $motivasi = isset($_POST['motivasi']) ? $_POST['motivasi'] : '';
 
-  if($status_form == UBAH){
+  if($status_form == UBAH || $status_form == SUDAH_TES_TERTULIS){
     $nama = $row['nama'];
     $nik = $row['nik'];
     $jenis_kelamin = $row['jenis_kelamin'];
@@ -245,8 +260,8 @@ if(
                 </div>
 
                 <div class="modal-footer">
-                  <button type="submit" name="Hapus" class="btn btn-success">Siap</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                  <button type="submit" name="insert_tes_tertulis" class="btn btn-success">Siap</button>
+                  <button type="button" name="Hapus" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
               </form>
             </div>
@@ -254,7 +269,17 @@ if(
         </div>
       </div>
       <?php
-    }?>
+    }else if($status_form == SUDAH_TES_TERTULIS){
+      ?>
+      <button type="reset"  class="btn btn-success btn-icon-split">
+        <span class="text">
+          Anda Sudah Tes Tertulis, Tunggu Informasi Tes Wawancara
+        </span>
+      </button>
+      <?php
+    }
+
+    ?>
   </div>
   <div class="row">
     <div class="card shadow col-md-12 mb-4">
@@ -341,8 +366,10 @@ if(
             <?php
             if($status_form == TAMBAH){
               echo  "<button class=\"btn btn-success\" name=\"Simpan\" type=\"submit\" >Simpan</button>";
-            }else{
+            }else if ($status_form == UBAH){
               echo  "<button class=\"btn btn-success\" name=\"Edit\" type=\"submit\" >Simpan Edit</button>";
+            }else{
+              echo  "<button class=\"btn btn-secondary\" type=\"reset\" >Sudah Tes Tertulis</button>";
             }
             ?>
           </div>
