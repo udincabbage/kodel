@@ -1,4 +1,17 @@
+<?php
+include "includes/conf.php";
 
+$jwt = $_COOKIE['jwt'];
+$jsonData = array(
+  'jwt' => $jwt
+);
+$jsonDataEncoded = json_encode($jsonData);
+$result_JSON = request_api($url,$jsonDataEncoded);
+
+if($result_JSON['data']['level'] == 4){
+  echo "<meta http-equiv='refresh' content='0; url=kaderisasi'> ";
+}else{
+?>
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -276,3 +289,4 @@
 
             </div>
           </div>
+<?php } ?>
