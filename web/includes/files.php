@@ -66,9 +66,9 @@ if(isset($_GET['p'])){
 		case 'valpenerimaanview':
         		if(!file_exists ('pages/admin/validasi/valpenerimaanview.php')) die ($nopage);
 				include "pages/admin/validasi/valpenerimaanview.php";
-				break;	
-			
-			//ampun guest	
+				break;
+
+			//ampun guest
 		case 'permohonan':
         if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
 				include "pages/guest/permohonan.php";
@@ -79,13 +79,18 @@ if(isset($_GET['p'])){
 				include "pages/guest/awal.php";
 				break;
 
+		case 'guesttestertulis':
+        if(!file_exists ('pages/guest/guesttestertulis.php')) die ($nopage);
+				include "pages/guest/guesttestertulis.php";
+				break;
+
 		//ampun anggota
-				
+
 		case 'detailkader':
         if(!file_exists ('pages/member/det_saya.php')) die ($nopage);
 				include "pages/member/det_saya.php";
 				break;
-				
+
 		case 'anggotaview':
         if(!file_exists ('pages/member/anggota_view.php')) die ($nopage);
 				include "pages/member/anggota_view.php";
@@ -102,8 +107,8 @@ if(isset($_GET['p'])){
 			if(!file_exists ('pages/member/pengalaman.php')) die ($nopage);
 			include "pages/member/pengalaman.php";
 			break;
-		
-		
+
+
 				//end
 
 			default:
