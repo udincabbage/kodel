@@ -247,7 +247,7 @@ if(isset($_POST['Non-Aktif'])) {
                   <?php 
 				 // echo $id;
 				$Sql2 = "SELECT pengalaman.*, anggota.id AS id_anggota, anggota.nama FROM pengalaman LEFT JOIN anggota ON anggota.id=pengalaman.id_anggota 
-                WHERE keterampilan.status=0 
+                WHERE pengalaman.status=0 
                 ORDER BY updated_at DESC ";
 				$database = new Database();
 				$db = $database->getConnection();
