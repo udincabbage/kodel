@@ -78,6 +78,18 @@ if(
     }
   }
 
+  if(isset($_POST['resetz'])) {
+    $id_pengguna = $_POST['id_pengguna'];
+    $mySql = "DELETE FROM pengguna_soal WHERE id_pengguna = ?";
+    $database = new Database();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($mySql);
+    $stmt->bindParam(1, $id_pengguna);
+    if($stmt->execute()) {
+
+    }
+
+  }
   if(isset($_POST['Edit'])) {
     $nama = $_POST['nama'];
     $id_pengguna = $_POST['id_pengguna'];
@@ -276,6 +288,11 @@ if(
           Anda Sudah Tes Tertulis, Tunggu Informasi Tes Wawancara
         </span>
       </button>
+      <!-- <form role="form" action="" method="post">
+        <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
+          <button type="submit" name="resetz" class="btn btn-danger">resetz</button>
+        </div>
+      </form> -->
       <?php
     }
 
