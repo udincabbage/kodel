@@ -138,6 +138,6 @@ if(isset($_GET['p'])){
 				break;
 		}
 	}else{
-		include "pages/anggota.php";
+		include "pages/main.php";
 	}
 ?>
