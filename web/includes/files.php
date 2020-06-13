@@ -97,6 +97,11 @@ if(isset($_GET['p'])){
 
 		//ampun anggota
 
+		case 'member':
+        if(!file_exists ('pages/member/awal.php')) die ($nopage);
+				include "pages/member/awal.php";
+				break;
+
 		case 'detailkader':
         if(!file_exists ('pages/member/det_saya.php')) die ($nopage);
 				include "pages/member/det_saya.php";
