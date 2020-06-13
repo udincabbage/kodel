@@ -61,13 +61,24 @@ if(isset($_GET['p'])){
 		case 'tertulis':
                 if(!file_exists ('pages/tertulis.php')) die ($nopage);
 				include "pages/tertulis.php";
-				break;
-
+				break; 
 		case 'valpenerimaanview':
         		if(!file_exists ('pages/admin/validasi/valpenerimaanview.php')) die ($nopage);
 				include "pages/admin/validasi/valpenerimaanview.php";
+				break; 
+		case 'valpendidikan':
+        		if(!file_exists ('pages/admin/validasi/valpendidikan.php')) die ($nopage);
+				include "pages/admin/validasi/valpendidikan.php";
 				break;
-
+		case 'valketerampilan':
+        		if(!file_exists ('pages/admin/validasi/valketerampilan.php')) die ($nopage);
+				include "pages/admin/validasi/valketerampilan.php";
+				break;
+		case 'valpengalaman':
+        		if(!file_exists ('pages/admin/validasi/valpengalaman.php')) die ($nopage);
+				include "pages/admin/validasi/valpengalaman.php";
+				break;
+				
 			//ampun guest
 		case 'permohonan':
         if(!file_exists ('pages/guest/permohonan.php')) die ($nopage);
