@@ -28,7 +28,7 @@ $(document).ready(function(){
         contentType : 'application/json',
         data : form_data,
         success : function(result){
-
+          
           if(result.message=="Login berhasil"){
             setCookie("jwt", result.jwt, 1);
             window.location.replace(MAIN_URL);
@@ -40,6 +40,7 @@ $(document).ready(function(){
 
         },
         error: function(xhr, resp, text){
+          // console.log(xhr);
           bootbox.alert(text);
           console.log(API_URL+"pengguna/login.php");
 

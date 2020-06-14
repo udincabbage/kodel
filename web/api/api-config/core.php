@@ -3,9 +3,9 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 $ippengguna=$_SERVER['REMOTE_ADDR'];
 if($ippengguna=="::1")
-  $home_url="http://localhost/rintikhabang/api/";
+  $home_url="https://localhost/kodel/api/";
 else {
-  $home_url="http://pmii.banjar.teknobara.co.id/api/";
+  $home_url="https://pmii.banjar.teknobara.co.id/api/";
 }
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;

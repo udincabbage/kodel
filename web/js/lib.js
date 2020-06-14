@@ -1,6 +1,6 @@
 //OFFLINE ONLY
-const API_URL="http://pmii.banjar.teknobara.co.id/api/";
-const MAIN_URL="http://pmii.banjar.teknobara.co.id/";
+const API_URL="https://pmii.banjar.teknobara.co.id/api/";
+const MAIN_URL="https://pmii.banjar.teknobara.co.id/";
 
 // function to make form values to json format
 $.fn.serializeObject = function(){

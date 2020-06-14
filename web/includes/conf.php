@@ -9,7 +9,7 @@ if(($ippengguna=="::1")||($ippengguna=="127.0.0.1")) {
 if (!$konaksidb) {
   echo 'Failed Connection !';}
 
-  define("API_URL", "http://pmii.banjar.teknobara.co.id/api/");
+  define("API_URL", "https://pmii.banjar.teknobara.co.id/api/");
 
   // $ippengguna=$_SERVER['REMOTE_ADDR'];
   // if(($ippengguna=="::1")||($ippengguna=="127.0.0.1")) {
