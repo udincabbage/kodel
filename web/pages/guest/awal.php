@@ -34,7 +34,7 @@ include "includes/conf.php";
                 </div>
                 <!-- Card Body -->
                 <div class="card-body"> 
-                 <p>Anda belum mengisi identitas data sebagai usulan menjadi anggota PMII Kab. Banjar.</p>
+                 <p>Selamat Datang calon Anggota PMII Kab. Banjar. Untuk bergabung menjadi anggota kami diperlukan beberapa langkah yaitu pengisian formulir data pribadi, test tertulis dan test wawancara.</p>
                   <div class="row">
                   <div class="col-md-6"> 
                    <div class="text-center">
@@ -55,7 +55,7 @@ include "includes/conf.php";
                   
                   
                   <p>Setelah pengisian data keanggotaan, Akan ada ujian tertulis yang dapat diikuti sebagai syarat penerimaan Anggota baru PMII Kab. Banjar</p>
-                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Ikuti test tertulis disini &rarr;</a>
+                  <a target="_blank" rel="nofollow" href="permohonan">Ikuti test tertulis disini &rarr;</a>
                 </div>
               </div>
             </div>

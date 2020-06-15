@@ -240,15 +240,21 @@ if(
   $maxage = date('Y-m-d', strtotime('- 50 year', $now));
   ?>
 
+  <!-- Page Heading --> 
+  
+  
   <!-- Page Heading -->
-
-  <div class="row">
-    <h1 class="h3 text-gray-800">Permohonan Anggota <small><sub>(<?php echo $id; ?>)</sub></small></h1>
-    <?php if($status_form == UBAH) {
+  <h1 class="h3 text-gray-800">Permohonan Keanggotaan <small><sub>(<?php echo $id; ?>)</sub></small></h1>
+  <div class="row"> 
+       <?php if($status_form == UBAH) {
       ?>
+       <div class="col-md-10">
+      <p class="mb-4">Anda telah mengisi Formulir Keanggotaan, selanjutnya anda dapat mengikuti test tertulis pada button berikut ini. Harap melaksanakan tes dengan kejujuran.</p>
+    </div>
+      <div class="col-md-2">
       <button type="submit"  class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#konfirmModal">
         <span class="icon ">
-          <i class="fas fa-list"></i>
+          <i class="fas fa-pen-square"></i>
         </span>
         <span class="text">
           Tes Tertulis
@@ -283,9 +289,18 @@ if(
       <?php
     }else if($status_form == SUDAH_TES_TERTULIS){
       ?>
+       <div class="col-md-10">
+      <p class="mb-4">Selamat! Anda telah menyelesaikan Tes Tertulis, Tunggu Informasi Tes Wawancara, kami akan menghubungi di no handphone Anda</p>
+    </div>
+      <div class="col-md-2">
+       
+      
       <button type="reset"  class="btn btn-success btn-icon-split">
+        <span class="icon ">
+          <i class="fas fa-user-tie"></i>
+        </span>
         <span class="text">
-          Anda Sudah Tes Tertulis, Tunggu Informasi Tes Wawancara
+          Wawancara
         </span>
       </button>
       <!-- <form role="form" action="" method="post">
@@ -295,9 +310,32 @@ if(
       </form> -->
       <?php
     }
-
-    ?>
+  else {
+      ?>
+      <div class="col-md-12">
+      <p class="mb-4">Untuk melanjutkan pendaftaran menjadi anggota PMII Kab. Banjar, diharapkan mengisi formulir berikut:</p>
+    </div>
+    <!-- <div class="col-md-2">
+      <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#anggotaModal">
+        <span class="icon ">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Tambah Data</span>
+      </a>
+    </div> -->
   </div>
+      <?php
+  }
+    ?>
+    
+    
+      
+    </div>  
+  </div>
+
+
+
+
   <div class="row">
     <div class="card shadow col-md-12 mb-4">
       <div class="card-body">
