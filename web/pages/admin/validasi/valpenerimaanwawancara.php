@@ -106,8 +106,9 @@
 
           <div class="form-group">
             <label for="nama" class="col-form-label">Nama</label>
-            <input type="text" class="form-control" id="nama" value="<?php echo $nama; ?>"  name="nama">
+            <input type="text" class="form-control" id="nama" value="<?php echo $nama; ?>"  name="nama" disabled/>
           </div>
+              <div class="form-group row">
           <?php
           $mySql = "SELECT * FROM kategori_wawancara ";
           $database = new Database();
@@ -119,15 +120,16 @@
           if($num!=0){
             while ($row = $stmt_kategori_wawancara->fetch(PDO::FETCH_ASSOC)){
               ?>
-              <div class="form-group">
+              <div class="col-md-6">
                 <label for="<?php echo $row['nama_kategori'].$id_pendaftaran ?>" class="col-form-label"><?php echo $row['nama_kategori'] ?></label>
-                <input type="number" class="form-control" id="<?php echo $row['nama_kategori'].$id_pendaftaran ?>" name="<?php echo $row['nama_kategori'].$id_pendaftaran ?>"  value="" >
-              </div>
+                <input type="number" class="form-control" id="<?php echo $row['nama_kategori'].$id_pendaftaran ?>" name="<?php echo $row['nama_kategori'].$id_pendaftaran ?>"  value="" step="0.1" min="0" max="9" >
+                </div>
               <?php
             }
           }
 
           ?>
+              </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             <button type="submit" name="wawancara<?php echo $id_pendaftaran; ?>" class="btn btn-success">Simpan</button>
