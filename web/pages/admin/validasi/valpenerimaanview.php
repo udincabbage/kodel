@@ -244,12 +244,13 @@ if(
             } else {
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
+                $id_pendaftaran = $id;
 
                 $cekTesTertulis = "SELECT T.* FROM tes_tertulis T WHERE id_pendaftaran = ?";
                 $database = new Database();
                 $db = $database->getConnection();
                 $stmtCekTertulis = $db->prepare($cekTesTertulis);
-                $stmtCekTertulis->bindParam(1, $id_pengguna);
+                $stmtCekTertulis->bindParam(1, $id);
                 $stmtCekTertulis->execute();
                 $numTertulis = $stmtCekTertulis->rowCount();
                 if($numTertulis==0){
@@ -259,7 +260,7 @@ if(
                   $database = new Database();
                   $db = $database->getConnection();
                   $stmtCekWawancara = $db->prepare($cekTesWawancara);
-                  $stmtCekWawancara->bindParam(1, $id_pengguna);
+                  $stmtCekWawancara->bindParam(1, $id);
                   $stmtCekWawancara->execute();
                   $numWawancara = $stmtCekWawancara->rowCount();
                   if($numWawancara==0){
@@ -267,18 +268,18 @@ if(
                   }
                 }
 
-                if($foto==NULL) { $fotox ='
-                  <a href="#" type="button" class="btn btn-warning btn-icon-split text-center"  data-toggle="modal" data-target="#fotoModal'. $id.' ">
-                  <button class="btn btn-link  ">! <i class="fas fa-user"></i></button>
-                  </a>
-                  ';} else {
-                    $fotox ='
-                    <form method="POST" action="anggotadetail">
-                    <input type="hidden" name="id" value="'.$id.'" >
-                    <button type="submit"  class="btn btn-link mt-n3 mb-n4 "><img src="uploads/avatar/'.$foto.' " width="50px"></a></button>
-                    </form>
-                    ';
-                  }
+                // if($foto==NULL) { $fotox ='
+                //   <a href="#" type="button" class="btn btn-warning btn-icon-split text-center"  data-toggle="modal" data-target="#fotoModal'. $id.' ">
+                //   <button class="btn btn-link  ">! <i class="fas fa-user"></i></button>
+                //   </a>
+                //   ';} else {
+                //     $fotox ='
+                //     <form method="POST" action="anggotadetail">
+                //     <input type="hidden" name="id" value="'.$id.'" >
+                //     <button type="submit"  class="btn btn-link mt-n3 mb-n4 "><img src="uploads/avatar/'.$foto.' " width="50px"></a></button>
+                //     </form>
+                //     ';
+                //   }
                   ?>
                   <tr>
                     <td><?php echo $no++; ?></td>
@@ -297,8 +298,8 @@ if(
                       <?php
                       if($status_anggota == 'Belum Tes Wawancara'){
                         echo "
-                      <a href=\"#\" type=\"button\" class=\"btn btn-info btn-icon-split\"  data-toggle=\"modal\" data-target=\"#editModal$id\">
-                        <span class=\"icon \"><i class=\"fas fa-check\"></i></span>
+                      <a href=\"#\" type=\"button\" class=\"btn btn-info btn-icon-split\"  data-toggle=\"modal\" data-target=\"#wawancaraModal$id_pendaftaran\">
+                        <span class=\"icon \"><i class=\"fas fa-comments\"></i></span>
                       </a>";
 
                       }
@@ -438,6 +439,9 @@ if(
                     </div>
                   </div>
                 </div>
+                <!-- end edit modal -->
+                <!-- spesial edition modal wawancara -->
+                <?php include "valpenerimaanwawancara.php"; ?>
                 <!-- end edit modal -->
                 <!-- delete modal -->
                 <div class="modal fade" id="deleteModal<?php echo $id; ?>" role="dialog">
