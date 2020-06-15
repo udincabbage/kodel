@@ -2,11 +2,11 @@
   if(isset($_POST["wawancara$id_pendaftaran"])){
     try {
       $database = new Database();
-      $db_wawancara = $database->getConnection();
-      $db_wawancara->beginTransaction();
+      $db = $database->getConnection();
+      $db->beginTransaction();
 
       $mySql = "SELECT id, nik, id_pengguna FROM `pendaftaran` WHERE id_pengguna = ?";
-      $stmt2 = $db_wawancara->prepare($mySql);
+      $stmt2 = $db->prepare($mySql);
       $stmt2->bindParam(1, $id_pengguna);
       $stmt2->execute();
       $num = $stmt2->rowCount();
@@ -19,23 +19,23 @@
       }
 
       $mySql = "SELECT * FROM `tes_wawancara` WHERE id_pendaftaran = ?";
-      $stmt2 = $db_wawancara->prepare($mySql);
+      $stmt2 = $db->prepare($mySql);
       $stmt2->bindParam(1, $id_pendaftaran);
       $stmt2->execute();
       $num = $stmt2->rowCount();
       if($num==0){
         $mySql = "INSERT INTO tes_wawancara SET id_pendaftaran = ?, nik = ?, nilai = ?, opsi = ?";
-        $stmt2 = $db_wawancara->prepare($mySql);
+        $stmt2 = $db->prepare($mySql);
         $stmt2->bindParam(1, $id_pendaftaran);
         $stmt2->bindParam(2, $nik);
         $stmt2->bindParam(3, $nilai);
         $stmt2->bindParam(4, $opsi);
         if($stmt2->execute()){
-          $id_tes_wawancara = $db_wawancara->lastInsertId();
+          $id_tes_wawancara = $db->lastInsertId();
 
           $jumlah_nilai_wawancara = 0;
           $mySql = "SELECT * FROM kategori_wawancara ";
-          $stmt_kategori_wawancara = $db_wawancara->prepare($mySql);
+          $stmt_kategori_wawancara = $db->prepare($mySql);
           $stmt_kategori_wawancara->execute();
           $num = $stmt_kategori_wawancara->rowCount();
           if($num!=0){
@@ -45,7 +45,7 @@
               $jumlah_nilai_wawancara = $jumlah_nilai_wawancara + $nilai_kategori;
 
               $mySql = "INSERT INTO tes_wawancara_detail SET id_tes_wawancara = ?, nama_kategori = ?, nilai = ?";
-              $stmt3 = $db_wawancara->prepare($mySql);
+              $stmt3 = $db->prepare($mySql);
               $stmt3->bindParam(1, $id_tes_wawancara);
               $stmt3->bindParam(2, $nama_kategori);
               $stmt3->bindParam(3, $nilai_kategori);
@@ -54,7 +54,7 @@
           }
 
           $updateSql = "UPDATE tes_wawancara SET nilai = ? WHERE id = ?";
-          $stmt4 = $db_wawancara->prepare($updateSql);
+          $stmt4 = $db->prepare($updateSql);
           $stmt4->bindParam(1, $jumlah_nilai_wawancara);
           $stmt4->bindParam(2, $id_tes_wawancara);
           if($stmt4->execute()){
@@ -64,6 +64,7 @@
                  <strong>Input nilai wawancara sukses <?php echo $id_tes_wawancara ?></strong>
                </div>
             <?php
+            $db->commit();
           }else{
             ?>
                <div class="alert alert-danger" role="alert">
@@ -74,6 +75,8 @@
           }
         }
       }
+
+      echo "<meta http-equiv='refresh' content='1; url=valpenerimaanview'> ";
     }catch (Exception $e) {
       ?>
        <div class="alert alert-success" role="alert">
@@ -81,7 +84,7 @@
          <strong>Input nilai wawancara gagal</strong> <?php echo $e ?>
        </div>
        <?php
-        $db_wawancara->rollBack();
+        $db->rollBack();
     }
   }
 ?>
@@ -108,8 +111,8 @@
           <?php
           $mySql = "SELECT * FROM kategori_wawancara ";
           $database = new Database();
-          $db_wawancara = $database->getConnection();
-          $stmt_kategori_wawancara = $db_wawancara->prepare($mySql);
+          $db = $database->getConnection();
+          $stmt_kategori_wawancara = $db->prepare($mySql);
           // $stmt_kategori_wawancara->bindParam(1, $id_pengguna);
           $stmt_kategori_wawancara->execute();
           $num = $stmt_kategori_wawancara->rowCount();

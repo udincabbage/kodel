@@ -265,6 +265,8 @@ if(
                   $numWawancara = $stmtCekWawancara->rowCount();
                   if($numWawancara==0){
                     $status_anggota = 'Belum Tes Wawancara';
+                  }else{
+                    $status_anggota = "Selesai Tes";
                   }
                 }
 
