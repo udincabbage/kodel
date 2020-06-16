@@ -3,7 +3,7 @@ include "includes/conf.php";
 ?>
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard <?php echo $id; ?></h1>
+            <h1 class="h3 mb-0 text-gray-800">Dashboard <small><sup>(<?php echo $id; ?>)</sup></small></h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
@@ -34,7 +34,7 @@ include "includes/conf.php";
                 </div>
                 <!-- Card Body -->
                 <div class="card-body"> 
-                 <p>Selamat Datang calon Anggota PMII Kab. Banjar. Untuk bergabung menjadi anggota kami diperlukan beberapa langkah yaitu pengisian formulir data pribadi, test tertulis dan test wawancara.</p>
+                 <p>Selamat Datang <strong><?php echo $user; ?></strong> calon Anggota PMII Kab. Banjar. Untuk bergabung menjadi anggota kami diperlukan beberapa langkah yaitu pengisian formulir data pribadi, test tertulis dan test wawancara.</p>
                   <div class="row">
                   <div class="col-md-6"> 
                    <div class="text-center">
@@ -55,7 +55,7 @@ include "includes/conf.php";
                   
                   
                   <p>Setelah pengisian data keanggotaan, Akan ada ujian tertulis yang dapat diikuti sebagai syarat penerimaan Anggota baru PMII Kab. Banjar</p>
-                  <a target="_blank" rel="nofollow" href="permohonan">Ikuti test tertulis disini &rarr;</a>
+                  <a target="_blank" rel="nofollow" href="permohonan">Progres Keanggotaan disini &rarr;</a>
                 </div>
               </div>
             </div>

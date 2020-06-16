@@ -16,7 +16,8 @@ $result_JSON = request_api($url,$jsonDataEncoded);
 
 if(
   cekLevel(API_URL."pengguna/validate-token.php",4)
-){
+){ 
+  
   if(isset($_POST['Simpan'])) {
     $nama = $_POST['nama'];
     $id_pengguna = $_POST['id_pengguna'];
@@ -34,12 +35,49 @@ if(
     $fakultas = $_POST['fakultas'];
     $program_studi = $_POST['program_studi'];
     $motivasi = $_POST['motivasi'];
-
+     
+     
+        $imgFile = $_FILES['foto']['name'];
+        $tmp_dir = $_FILES['foto']['tmp_name'];
+        $imgSize = $_FILES['foto']['size'];
+        
+        if(empty($imgFile)){
+           $errMSG = "Please Select Image File.";
+          }
+          else
+          {
+           $upload_dir = 'uploads/avatar/'; // upload directory
+         
+           $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
+          
+           // valid image extensions
+           $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+          
+           // rename uploading image
+           $userpic = $id_pengguna."_".generateRandomString(4).".".$imgExt;
+            
+           // allow valid image file formats
+           if(in_array($imgExt, $valid_extensions)){   
+            // Check file size '2MB'
+            if($imgSize < 2400000)    {
+             move_uploaded_file($tmp_dir,$upload_dir.$userpic);
+            }
+            else{
+             $errMSG = "maaf file terlalu besar, pastikan tidak lebih dari 2MB.";
+            }
+           }
+           else{
+            $errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";  
+           }
+          } 
+        if(!isset($errMSG))
+        {
+            
     $mySql = "INSERT INTO `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
     id_pengguna = ?, nik = ?, nama = ?, email = ?,
     jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
     alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
-    asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ?";
+    asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ? , foto = ? ";
     // $mySql = "INSERT INTO `anggota` SET (`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Daftar' ) ";
     $database = new Database();
     $db = $database->getConnection();
@@ -60,6 +98,7 @@ if(
     $stmt->bindParam(14, $fakultas);
     $stmt->bindParam(15, $program_studi);
     $stmt->bindParam(16, $motivasi);
+    $stmt->bindParam(17, $userpic);
 
     if($stmt->execute()) {
       ?>
@@ -68,7 +107,9 @@ if(
         <strong>Tambah Data Berhasil!</strong> Permohonan anggota dengan nama  <?php echo $nama; ?> telah disimpan
       </div>
       <?php
-    }else{
+    }
+        }
+        else{
       ?>
       <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -214,6 +255,7 @@ if(
   $fakultas = isset($_POST['fakultas']) ? $_POST['fakultas'] : '';
   $program_studi = isset($_POST['program_studi']) ? $_POST['program_studi'] : '';
   $motivasi = isset($_POST['motivasi']) ? $_POST['motivasi'] : '';
+  // $foto = isset($_POST['foto']) ? $_POST['foto'] : '';
 
   if($status_form == UBAH || $status_form == SUDAH_TES_TERTULIS){
     $nama = $row['nama'];
@@ -231,6 +273,7 @@ if(
     $fakultas = $row['fakultas'];
     $program_studi = $row['prodi'];
     $motivasi = $row['motivasi'];
+    $foto = $row['foto'];
   }
 
   ?>
@@ -259,7 +302,8 @@ if(
         <span class="text">
           Tes Tertulis
         </span>
-      </button>
+      </button> 
+      </div>  
       <div class="modal fade" id="konfirmModal" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
@@ -292,9 +336,7 @@ if(
        <div class="col-md-10">
       <p class="mb-4">Selamat! Anda telah menyelesaikan Tes Tertulis, Tunggu Informasi Tes Wawancara, kami akan menghubungi di no handphone Anda</p>
     </div>
-      <div class="col-md-2">
-       
-      
+      <div class="col-md-2"> 
       <button type="reset"  class="btn btn-success btn-icon-split">
         <span class="icon ">
           <i class="fas fa-user-tie"></i>
@@ -308,6 +350,7 @@ if(
           <button type="submit" name="resetz" class="btn btn-danger">resetz</button>
         </div>
       </form> -->
+    </div>  
       <?php
     }
   else {
@@ -322,15 +365,13 @@ if(
         </span>
         <span class="text">Tambah Data</span>
       </a>
-    </div> -->
-  </div>
+    </div> --> 
       <?php
   }
     ?>
     
     
       
-    </div>  
   </div>
 
 
@@ -339,14 +380,26 @@ if(
   <div class="row">
     <div class="card shadow col-md-12 mb-4">
       <div class="card-body">
-        <form method="post" action="" >
+        <form method="post" action=""  enctype="multipart/form-data">
+        <div class="form-group">
+          <center>
+            <img id="image-preview" alt="image preview" src="uploads/avatar/<?php echo $foto; ?>" />
+            <img src="uploads/avatar/<?php echo $foto; ?>" height="120"/>
+          </center>  
+          </div>   
           <div class="form-group row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <label for="nama" class="col-form-label">Nama</label>
               <input type="hidden" class="form-control" id="id_pengguna" name="id_pengguna" value="<?php echo $id_pengguna ?>">
               <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
             </div>
-          </div>
+            <div class="col-md-4">
+              <label for="foto" class="col-form-label">Foto</label> 
+              <input type="file" class="form-control" id="image-source" name="foto" onchange="previewImage();"/>
+            </div>
+                          
+          </div> 
+          
           <div class="form-group row">
             <div class="col-md-6">
               <label for="nik" class="col-form-label">Nomor Induk Kependudukan (KTP)</label>
@@ -377,7 +430,7 @@ if(
             </div>
             <div class="col-md-6">
               <label for="email" class="col-form-label">Email</label>
-              <input type="email" class="form-control" id="email" name="email"  value="<?php echo $email ?>">
+              <input type="email" class="form-control" id="email" name="email"  value="<?php echo $user ?>">
             </div>
           </div>
           <div class="form-group">
@@ -433,7 +486,7 @@ if(
     </div>
   </div>
 
-  <!-- Script -->
+  <!-- Script 
   <script type='text/javascript'>
   $(document).ready(function(){
     $('#btn_upload').click(function(){
@@ -460,8 +513,20 @@ if(
       });
     });
   });
-</script>
+</script> -->
 
+<!-- Script -->
+<script type='text/javascript'>
+function previewImage() {
+    document.getElementById("image-preview").style.display = "block";
+    var oFReader = new FileReader();
+     oFReader.readAsDataURL(document.getElementById("image-source").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("image-preview").src = oFREvent.target.result;
+    };
+  };
+</script> 
 
 <script>
 window.setTimeout(function() {

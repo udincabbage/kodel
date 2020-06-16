@@ -49,12 +49,12 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="beranda.php#hero">beranda</a></li>
-          <li><a href="#register">Gabung</a></li>
+          <li><a href="beranda.php#register">Gabung</a></li>
           <li><a href="beranda.php#about-us">Tentang Kami</a></li>
-          <li><a href="#afiliasi">Afiliasi</a></li>
-          <li><a href="#team">Panitia</a></li>
-          <li><a href="beranda.php##blog">Berita</a></li>
-          <li><a href="beranda.php##contact">Hubungi Kami</a></li>
+          <li><a href="beranda.php#afiliasi">Afiliasi</a></li>
+          <li><a href="beranda.php#team">Panitia</a></li>
+          <li><a href="beranda.php#blog">Berita</a></li>
+          <li><a href="beranda.php#contact">Hubungi Kami</a></li>
           <li><a href="login.php">Login</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
