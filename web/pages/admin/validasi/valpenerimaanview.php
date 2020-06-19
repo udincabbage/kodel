@@ -6,15 +6,15 @@ if(
   cekLevel(API_URL."pengguna/validate-token.php",2)
 ){
   if(isset($_POST['Simpan'])) {
+    $id = $_POST['id'];          
     $no_anggota = $_POST['no_anggota'];
     $tanggal_gabung = $_POST['tanggal_gabung'];
     $nama = $_POST['nama'];
-    // $id_pengguna = 2;
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $id_pengguna = $_POST['id_pengguna']; 
     $nik = $_POST['nik'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $tempat_ = $_POST['tempat_lahir'];
+    $tempat_lahir = $_POST['tempat_lahir'];
     $tanggal_lahir = $_POST['tanggal_lahir'];
     $telepon = $_POST['telepon'];
     $email = $_POST['email'];
@@ -28,20 +28,22 @@ if(
     $bulan_mapaba = $_POST['bulan_mapaba'];
     $tahun_mapaba = $_POST['tahun_mapaba'];
     $motivasi = $_POST['motivasi'];
-    $level = 2;
-    $opsi = "Anggota";
+    $status_anggota = "Aktif"; 
 
-    $Sql = "INSERT INTO `pengguna`(status, user, password, level, opsi) VALUES ( '1',?,?,?,? ) ";
+    $sql = "UPDATE  `pengguna` SET level='3' WHERE id=? ";
     $database = new Database();
     $db = $database->getConnection();
-    $stmt = $db->prepare($Sql);
-    $stmt->bindParam(1, $username);
-    $stmt->bindParam(2, $password);
-    $stmt->bindParam(3, $level);
-    $stmt->bindParam(4, $opsi);
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $id_pengguna); 
     $stmt->execute();
 
-    $id_pengguna = $db->lastInsertId();
+    $sql2 = "UPDATE  `pendaftaran` SET status='1' WHERE id=? ";
+    $database = new Database();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($sql2);
+    $stmt->bindParam(1, $id); 
+    $stmt->execute();
+ 
 
     $mySql = "INSERT INTO `anggota`(`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '1',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Aktif' ) ";
     $database = new Database();
@@ -227,7 +229,9 @@ if(
           </thead>
           <tbody>
             <?php
-            $mySql = "SELECT P.* FROM pendaftaran P ORDER BY updated_at DESC ";
+       //     $mySql = "SELECT P.* FROM pendaftaran P  WHERE P.status=0
+            $mySql = "SELECT P.* FROM pendaftaran P 
+            ORDER BY updated_at DESC ";
             $database = new Database();
             $db = $database->getConnection();
             $stmt = $db->prepare($mySql);
@@ -305,19 +309,24 @@ if(
                       </a>";
 
                       }
+                      if($status_anggota == 'Selesai Tes'){
                       ?>
+                      <a href="#" type="button" class="btn btn-success btn-icon-split"  data-toggle="modal" data-target="#terimaModal<?php echo $id; ?>">
+                        <span class="icon "><i class="fas fa-check-double"></i></span>
+                      </a>
+                      <?php } ?>
                       <a href="#" type="button" class="btn btn-danger btn-icon-split"  data-toggle="modal" data-target="#deleteModal<?php echo $id; ?>">
                         <span class="icon "><i class="fas fa-trash"></i></span>
                       </a>
                   </td>
                 </tr>
                 <!-- spesial edition modal edit -->
-                <div class="modal fade" id="editModal<?php echo $id; ?>" role="dialog">
+                <div class="modal fade" id="terimaModal<?php echo $id; ?>" role="dialog">
                   <div class="modal-dialog modal-lg">
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="anggotaModalLabel">Update Data Anggota <?php echo $nama; ?></h5>
+                        <h5 class="modal-title" id="anggotaModalLabel">Form Terima Anggota <?php echo $nama; ?></h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button>
@@ -330,11 +339,11 @@ if(
                           <div class="form-group row">
                             <div class="col-md-6">
                               <label for="no_anggota" class="col-form-label">No Anggota</label>
-                              <input type="text" class="form-control" id="no_anggota" value="<?php echo $no_anggota; ?>" name="no_anggota">
+                              <input type="text" class="form-control" id="no_anggota" value="<?php echo $no_anggota; ?>" name="no_anggota" required/>
                             </div>
                             <div class="col-md-6">
                               <label for="tanggal_gabung" class="col-form-label">Tanggal Bergabung</label>
-                              <input type="date"  value="<?php echo $tanggal_gabung; ?>"  class="form-control" id="tanggal_gabung" name="tanggal_gabung">
+                              <input type="date"  value="<?php echo date('Y-m-d'); ?>"  class="form-control" id="tanggal_gabung" name="tanggal_gabung">
                             </div>
                           </div>
                           <div class="form-group row">
@@ -434,7 +443,7 @@ if(
 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="Edit" class="btn btn-success">Simpan</button>
+                            <button type="submit" name="Simpan" class="btn btn-success">Simpan</button>
                           </div>
                         </form>
                       </div>
@@ -524,135 +533,7 @@ if(
   $minage = date('Y-m-d', strtotime('- 16 year', $now));
   $maxage = date('Y-m-d', strtotime('- 50 year', $now));
   ?>
-  <!-- Tambah Anggota Modal-->
-  <div class="modal fade" id="anggotaModal" tabindex="-1" role="dialog" aria-labelledby="anggotaModalLabel" aria-hidden="true">
-    <form method="post" action="" >
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="anggotaModalLabel">Register Anggota Baru</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body"><p>Tambahkan data Anggota, data anggota akan langsung aktif dan dapat mengakses sesuai username dan password terinput.</p>
-            <form>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="no_anggota" class="col-form-label">No Anggota</label>
-                  <input type="text" class="form-control" id="no_anggota" name="no_anggota">
-                </div>
-                <div class="col-md-6">
-                  <label for="tanggal_gabung" class="col-form-label">Tanggal Bergabung</label>
-                  <input type="date" value="<?php echo date('Y-m-d'); ?>" class="form-control" id="tanggal_gabung" name="tanggal_gabung">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="nama" class="col-form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama">
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="username" class="col-form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username">
-                </div>
-                <div class="col-md-6">
-                  <label for="password" class="col-form-label">Password</label>
-                  <input type="text" class="form-control" id="password" name="password">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="nik" class="col-form-label">Nomor Induk Kependudukan (KTP)</label>
-                  <input type="text" class="form-control" id="nik" name="nik">
-                </div>
-                <div class="col-md-6">
-                  <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
-                  <div class="radio">
-                    <label class="radio-inline"><input type="radio" name="jenis_kelamin" value="Laki-laki" checked> Laki-laki </label>&nbsp;&nbsp;&nbsp;
-                    <label class="radio-inline"><input type="radio" value="Perempuan" name="jenis_kelamin"> Perempuan</label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="tempat_lahir" class="col-form-label">Tempat Lahir</label>
-                  <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir">
-                </div>
-                <div class="col-md-6">
-                  <label for="tanggal_lahir" class="col-form-label">Tanggal Lahir</label>
-                  <input type="date" class="form-control"  value="<?php echo $minage;?>"  min="<?php echo $maxage;?>" max="<?php echo $minage;?>"  id="tanggal_lahir" name="tanggal_lahir">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="telepon" class="col-form-label">Telepon</label>
-                  <input type="text" class="form-control" id="telepon" name="telepon">
-                </div>
-                <div class="col-md-6">
-                  <label for="email" class="col-form-label">Email</label>
-                  <input type="email" class="form-control" id="email" name="email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="alamat" class="col-form-label">Alamat </label>
-                <textarea class="form-control" id="alamat" name="alamat"></textarea>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-4">
-                  <label for="desa" class="col-form-label">Desa/Kelurahan</label>
-                  <input type="text" class="form-control" id="desa" name="desa">
-                </div>
-                <div class="col-md-4">
-                  <label for="kecamatan" class="col-form-label">Kecamatan</label>
-                  <input type="text" class="form-control" id="kecamatan" name="kecamatan">
-                </div>
-                <div class="col-md-4">
-                  <label for="kabupaten" class="col-form-label">Kabupaten</label>
-                  <input type="text" class="form-control" id="kabupaten" name="kabupaten">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="asal_kampus" class="col-form-label">Asal Komisariat / Kampus</label>
-                <input type="text" class="form-control" id="asal_kampus" name="asal_kampus">
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="fakultas" class="col-form-label">Fakultas</label>
-                  <input type="text" class="form-control" id="fakultas" name="fakultas">
-                </div>
-                <div class="col-md-6">
-                  <label for="program_studi" class="col-form-label">Program Studi</label>
-                  <input type="text" class="form-control" id="program_studi" name="program_studi">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="bulan_mapaba" class="col-form-label">Bulan Mapaba</label>
-                  <input type="text" class="form-control" id="bulan_mapaba" name="bulan_mapaba">
-                </div>
-                <div class="col-md-6">
-                  <label for="tahun_mapaba" class="col-form-label">Tahun Mapaba</label>
-                  <input type="number" class="form-control" value="<?php echo date('Y'); ?>" id="tahun_mapaba" name="tahun_mapaba">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="motivasi" class="col-form-label"> Motivasi </label>
-                <textarea class="form-control" id="motivasi" name="motivasi"></textarea>
-              </div>
-            </form>
-
-
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-            <button class="btn btn-success" name="Simpan" type="submit" >Simpan</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-
+  
 
   <!-- Script -->
   <script type='text/javascript'>
