@@ -467,7 +467,7 @@ if(
           </div>
           <div class="form-group">
             <label for="motivasi" class="col-form-label"> Motivasi </label>
-            <textarea class="form-control" id="motivasi" name="motivasi"><?php echo $motivasi ?></textarea>
+            <textarea class="form-control" id="ckeditor" name="ckeditor"><?php echo $motivasi ?></textarea>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -527,7 +527,7 @@ function previewImage() {
     };
   };
 </script> 
-
+<script type="text/javascript" src="vendor/ckeditor/ckeditor.js"></script>
 <script>
 window.setTimeout(function() {
   $(".alert").fadeTo(500, 0).slideUp(500, function(){
