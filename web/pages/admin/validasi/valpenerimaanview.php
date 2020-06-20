@@ -25,83 +25,84 @@ if(
     $asal_kampus = $_POST['asal_kampus'];
     $fakultas = $_POST['fakultas'];
     $program_studi = $_POST['program_studi'];
-    $bulan_mapaba = $_POST['bulan_mapaba'];
-    $tahun_mapaba = $_POST['tahun_mapaba'];
     $motivasi = $_POST['motivasi'];
     $status_anggota = "Aktif";
 
-    $sql = "UPDATE  `pengguna` SET level='3' WHERE id=? ";
-    $database = new Database();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(1, $id_pengguna);
-    $stmt->execute();
+    if(isset($_POST['foto'])) {
+      $foto = $POST['foto'];
 
-    $sql2 = "UPDATE  `pendaftaran` SET status='1' WHERE id=? ";
-    $database = new Database();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($sql2);
-    $stmt->bindParam(1, $id);
-    $stmt->execute();
+      try {
+        $database = new Database();
+        $db = $database->getConnection();
+        $db->beginTransaction();
 
-    // $mySql = "INSERT INTO `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
-    // id_pengguna = ?, nik = ?, nama = ?, email = ?,
-    // jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
-    // alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
-    // asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ? , foto = ? ";
-    //
-    // $database = new Database();
-    // $db = $database->getConnection();
-    // $stmt = $db->prepare($mySql);
-    // $stmt->bindParam(1, $id_pengguna);
-    // $stmt->bindParam(2, $nik);
-    // $stmt->bindParam(3, $nama);
-    // $stmt->bindParam(4, $email);
-    // $stmt->bindParam(5, $jenis_kelamin);
-    // $stmt->bindParam(6, $tempat_lahir);
-    // $stmt->bindParam(7, $tanggal_lahir);
-    // $stmt->bindParam(8, $telepon);
-    // $stmt->bindParam(9, $alamat);
-    // $stmt->bindParam(10, $desa);
-    // $stmt->bindParam(11, $kecamatan);
-    // $stmt->bindParam(12, $kabupaten);
-    // $stmt->bindParam(13, $asal_kampus);
-    // $stmt->bindParam(14, $fakultas);
-    // $stmt->bindParam(15, $program_studi);
-    // $stmt->bindParam(16, $motivasi);
-    // $stmt->bindParam(17, $userpic);
+        $sql = "UPDATE  `pengguna` SET level='3' WHERE id=? ";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(1, $id_pengguna);
+        $stmt->execute();
+
+        $sql2 = "UPDATE  `pendaftaran` SET status='1' WHERE id=? ";
+        $stmt = $db->prepare($sql2);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        $mySql = "INSERT INTO `anggota` SET `status` = 1, `no_anggota` =?, `tanggal_gabung` =?, `id_pengguna`=?, `nik`=?, `nama`=?,
+         `email`=?, `jenis_kelamin`=?, `tempat_lahir`=?, `tanggal_lahir`=?, `telepon`=?, `alamat`=?, `desa`=?, `kecamatan`=?, `kabupaten`=?,
+         `asal_kampus`=?, `fakultas`=?, `prodi`=?, `motivasi`=?, `foto`=?, `status_anggota`='Aktif'";
+        $stmt = $db->prepare($mySql);
+        $stmt->bindParam(1, $no_anggota);
+        $stmt->bindParam(2, $tanggal_gabung);
+        $stmt->bindParam(3, $id_pengguna);
+        $stmt->bindParam(4, $nik);
+        $stmt->bindParam(5, $nama);
+        $stmt->bindParam(6, $email);
+        $stmt->bindParam(7, $jenis_kelamin);
+        $stmt->bindParam(8, $tempat_lahir);
+        $stmt->bindParam(9, $tanggal_lahir);
+        $stmt->bindParam(10, $telepon);
+        $stmt->bindParam(11, $alamat);
+        $stmt->bindParam(12, $desa);
+        $stmt->bindParam(13, $kecamatan);
+        $stmt->bindParam(14, $kabupaten);
+        $stmt->bindParam(15, $asal_kampus);
+        $stmt->bindParam(16, $fakultas);
+        $stmt->bindParam(17, $program_studi);
+        $stmt->bindParam(18, $motivasi);
+        $stmt->bindParam(19, $foto);
 
 
-    $mySql = "INSERT INTO `anggota`(`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '1',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Aktif' ) ";
-    $database = new Database();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($mySql);
-    $stmt->bindParam(1, $no_anggota);
-    $stmt->bindParam(2, $tanggal_gabung);
-    $stmt->bindParam(3, $id_pengguna);
-    $stmt->bindParam(4, $nik);
-    $stmt->bindParam(5, $nama);
-    $stmt->bindParam(6, $email);
-    $stmt->bindParam(7, $jenis_kelamin);
-    $stmt->bindParam(8, $tempat_lahir);
-    $stmt->bindParam(9, $tanggal_lahir);
-    $stmt->bindParam(10, $telepon);
-    $stmt->bindParam(11, $alamat);
-    $stmt->bindParam(12, $desa);
-    $stmt->bindParam(13, $kecamatan);
-    $stmt->bindParam(14, $kabupaten);
-    $stmt->bindParam(15, $asal_kampus);
-    $stmt->bindParam(16, $fakultas);
-    $stmt->bindParam(17, $program_studi);
-    $stmt->bindParam(18, $bulan_mapaba);
-    $stmt->bindParam(19, $tahun_mapaba);
-    $stmt->bindParam(20, $motivasi);
-    $stmt->execute();
-    if($stmt) {
+
+        if($stmt->execute()) {
+          ?>
+          <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Tambah Data Berhasil!</strong> Pengguna baru dengan ID = <?php echo $id_pengguna; ?>, dengan nama  <?php echo $nama; ?> telah ditambahkan!
+          </div>
+          <?php
+        }else{
+          ?>
+           <div class="alert alert-success" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <strong>Penerimaan anggota gagal</strong> <?php echo $e ?>
+           </div>
+           <?php
+        }
+        $db->commit();
+      }catch (Exception $e) {
+        print_r($e);
+        ?>
+         <div class="alert alert-success" role="alert">
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <strong>Penerimaan anggota gagal</strong> <?php echo $e ?>
+         </div>
+         <?php
+          $db->rollBack();
+      }
+    }else{
       ?>
-      <div class="alert alert-success" role="alert">
+      <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Tambah Data Berhasil!</strong> Pengguna baru dengan ID = <?php echo $id_pengguna; ?>, dengan nama  <?php echo $nama; ?> telah ditambahkan!
+        <strong>Foto belum ada</strong>
       </div>
       <?php
     }
@@ -372,7 +373,7 @@ if(
 
                               $no_anggota_baru = $yy." 0001";
 
-                              $mySql = "SELECT A.no_anggota FROM Anggota A WHERE  no_anggota like ? ORDER BY no_anggota DESC";
+                              $mySql = "SELECT A.no_anggota FROM anggota A WHERE  no_anggota like ? ORDER BY no_anggota DESC";
                               $stmt_cek_no_anggota = $db->prepare($mySql);
                               $stmt_cek_no_anggota->bindParam(1, $yy_cari);
                               $stmt_cek_no_anggota->execute();
@@ -396,6 +397,7 @@ if(
                             <div class="col-md-8">
                               <label for="nama" class="col-form-label">Nama</label>
                               <input type="text" class="form-control" id="nama" value="<?php echo $nama; ?>"  name="nama">
+                              <input type="hidden" class="form-control" id="foto" value="<?php echo $foto; ?>"  name="foto">
                             </div>
                             <div class="col-md-4">
                               <label for="status_anggota" class="col-form-label"> Status Keanggotaan </label>
@@ -472,7 +474,7 @@ if(
                               <input type="text" class="form-control" id="program_studi"  value="<?php echo $prodi; ?>" name="program_studi">
                             </div>
                           </div>
-                          <div class="form-group row">
+                          <!-- <div class="form-group row">
                             <div class="col-md-6">
                               <label for="bulan_mapaba" class="col-form-label">Bulan Mapaba</label>
                               <input type="text" class="form-control" id="bulan_mapaba" value="<?php echo $bulan_mapaba; ?>"  name="bulan_mapaba">
@@ -481,7 +483,7 @@ if(
                               <label for="tahun_mapaba" class="col-form-label">Tahun Mapaba</label>
                               <input type="number" class="form-control"  value="<?php echo $tahun_mapaba; ?>" id="tahun_mapaba" name="tahun_mapaba">
                             </div>
-                          </div>
+                          </div> -->
                           <div class="form-group">
                             <label for="motivasi" class="col-form-label"> Motivasi </label>
                             <textarea class="form-control" id="motivasi" name="motivasi"> <?php echo $motivasi; ?> </textarea>
