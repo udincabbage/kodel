@@ -51,6 +51,13 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Anggota</span></a>
       </li>
+ 
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="kegiatan">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Kegiatan</span></a>
+      </li>
 
       <!-- Nav Pendidikan -->
       <li class="nav-item">

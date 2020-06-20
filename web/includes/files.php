@@ -51,6 +51,10 @@ if(isset($_GET['p'])){
                 if(!file_exists ('pages/keterampilan.php')) die ($nopage);
 				include "pages/keterampilan.php";
 				break;
+			case 'kegiatan':
+                if(!file_exists ('pages/kegiatan.php')) die ($nopage);
+				include "pages/kegiatan.php";
+				break;
 		case 'soal':
                 if(!file_exists ('pages/soal.php')) die ($nopage);
 				include "pages/soal.php";
@@ -128,6 +132,10 @@ if(isset($_GET['p'])){
 		case 'pengalamanku':
 			if(!file_exists ('pages/member/pengalaman.php')) die ($nopage);
 			include "pages/member/pengalaman.php";
+			break; 
+		case 'kegiatanku':
+			if(!file_exists ('pages/member/kegiatan.php')) die ($nopage);
+			include "pages/member/kegiatan.php";
 			break;
 
 
