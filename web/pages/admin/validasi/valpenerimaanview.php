@@ -339,7 +339,7 @@ if(
                           <div class="form-group row">
                             <div class="col-md-6">
                               <label for="no_anggota" class="col-form-label">No Anggota</label>
-                              <input type="text" class="form-control" id="no_anggota" value="<?php echo $no_anggota; ?>" name="no_anggota" required/>
+                              <input type="text" class="form-control" id="no_anggota" value="" name="no_anggota" required/>
                             </div>
                             <div class="col-md-6">
                               <label for="tanggal_gabung" class="col-form-label">Tanggal Bergabung</label>
