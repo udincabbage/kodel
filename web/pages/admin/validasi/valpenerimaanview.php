@@ -6,11 +6,11 @@ if(
   cekLevel(API_URL."pengguna/validate-token.php",2)
 ){
   if(isset($_POST['Simpan'])) {
-    $id = $_POST['id'];          
+    $id = $_POST['id'];
     $no_anggota = $_POST['no_anggota'];
     $tanggal_gabung = $_POST['tanggal_gabung'];
     $nama = $_POST['nama'];
-    $id_pengguna = $_POST['id_pengguna']; 
+    $id_pengguna = $_POST['id_pengguna'];
     $nik = $_POST['nik'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $tempat_ = $_POST['tempat_lahir'];
@@ -28,22 +28,49 @@ if(
     $bulan_mapaba = $_POST['bulan_mapaba'];
     $tahun_mapaba = $_POST['tahun_mapaba'];
     $motivasi = $_POST['motivasi'];
-    $status_anggota = "Aktif"; 
+    $status_anggota = "Aktif";
 
     $sql = "UPDATE  `pengguna` SET level='3' WHERE id=? ";
     $database = new Database();
     $db = $database->getConnection();
     $stmt = $db->prepare($sql);
-    $stmt->bindParam(1, $id_pengguna); 
+    $stmt->bindParam(1, $id_pengguna);
     $stmt->execute();
 
     $sql2 = "UPDATE  `pendaftaran` SET status='1' WHERE id=? ";
     $database = new Database();
     $db = $database->getConnection();
     $stmt = $db->prepare($sql2);
-    $stmt->bindParam(1, $id); 
+    $stmt->bindParam(1, $id);
     $stmt->execute();
- 
+
+    // $mySql = "INSERT INTO `pendaftaran` SET status = 0, tanggal_daftar = CURDATE(),
+    // id_pengguna = ?, nik = ?, nama = ?, email = ?,
+    // jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, telepon = ?,
+    // alamat = ?, desa = ?, kecamatan = ?, kabupaten = ?,
+    // asal_kampus = ?, fakultas = ?, prodi = ?, motivasi = ? , foto = ? ";
+    //
+    // $database = new Database();
+    // $db = $database->getConnection();
+    // $stmt = $db->prepare($mySql);
+    // $stmt->bindParam(1, $id_pengguna);
+    // $stmt->bindParam(2, $nik);
+    // $stmt->bindParam(3, $nama);
+    // $stmt->bindParam(4, $email);
+    // $stmt->bindParam(5, $jenis_kelamin);
+    // $stmt->bindParam(6, $tempat_lahir);
+    // $stmt->bindParam(7, $tanggal_lahir);
+    // $stmt->bindParam(8, $telepon);
+    // $stmt->bindParam(9, $alamat);
+    // $stmt->bindParam(10, $desa);
+    // $stmt->bindParam(11, $kecamatan);
+    // $stmt->bindParam(12, $kabupaten);
+    // $stmt->bindParam(13, $asal_kampus);
+    // $stmt->bindParam(14, $fakultas);
+    // $stmt->bindParam(15, $program_studi);
+    // $stmt->bindParam(16, $motivasi);
+    // $stmt->bindParam(17, $userpic);
+
 
     $mySql = "INSERT INTO `anggota`(`status`, `no_anggota`, `tanggal_gabung`, `id_pengguna`, `nik`, `nama`, `email`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `telepon`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `asal_kampus`, `fakultas`, `prodi`, `bulan_mapaba`, `tahun_mapaba`, `motivasi`, `status_anggota`) VALUES ( '1',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Aktif' ) ";
     $database = new Database();
@@ -229,8 +256,7 @@ if(
           </thead>
           <tbody>
             <?php
-       //     $mySql = "SELECT P.* FROM pendaftaran P  WHERE P.status=0
-            $mySql = "SELECT P.* FROM pendaftaran P 
+           $mySql = "SELECT P.* FROM pendaftaran P  WHERE P.status=0
             ORDER BY updated_at DESC ";
             $database = new Database();
             $db = $database->getConnection();
@@ -339,7 +365,27 @@ if(
                           <div class="form-group row">
                             <div class="col-md-6">
                               <label for="no_anggota" class="col-form-label">No Anggota</label>
-                              <input type="text" class="form-control" id="no_anggota" value="" name="no_anggota" required/>
+                              <?php
+                              $yy = substr(date('Y'),2,2);
+                              $yy_cari = $yy."%";
+
+
+                              $no_anggota_baru = $yy." 0001";
+
+                              $mySql = "SELECT A.no_anggota FROM Anggota A WHERE  no_anggota like ? ORDER BY no_anggota DESC";
+                              $stmt_cek_no_anggota = $db->prepare($mySql);
+                              $stmt_cek_no_anggota->bindParam(1, $yy_cari);
+                              $stmt_cek_no_anggota->execute();
+                              $num_cek_no_anggota = $stmt_cek_no_anggota->rowCount();
+                              if($num_cek_no_anggota!=0){
+                                $row_cek_anggota = $stmt_cek_no_anggota->fetch(PDO::FETCH_ASSOC);
+                                $no_anggota_terakhir = $row_cek_anggota['no_anggota'];
+                                $no_anggota_terakhir_dipotong = substr($no_anggota_terakhir,4,4);
+                                $no_anggota_baru_int = intval($no_anggota_terakhir_dipotong)+1;
+                                $no_anggota_baru = $yy." ".str_pad($no_anggota_baru_int, 4, '0', STR_PAD_LEFT);;
+                              }
+                              ?>
+                              <input type="text" class="form-control" id="no_anggota" value="<?php echo $no_anggota_baru ?>" name="no_anggota" required/>
                             </div>
                             <div class="col-md-6">
                               <label for="tanggal_gabung" class="col-form-label">Tanggal Bergabung</label>
@@ -533,7 +579,7 @@ if(
   $minage = date('Y-m-d', strtotime('- 16 year', $now));
   $maxage = date('Y-m-d', strtotime('- 50 year', $now));
   ?>
-  
+
 
   <!-- Script -->
   <script type='text/javascript'>
