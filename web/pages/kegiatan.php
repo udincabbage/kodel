@@ -3,7 +3,7 @@
   if(isset($_POST['Simpan'])) { 
       $id_anggota = $_POST['id_anggota'];
       $tanggal_kegiatan = $_POST['tanggal_kegiatan'];  
-      $nama_kegiatan = $_POST['judul_kegiatan'];  
+      $judul_kegiatan = $_POST['judul_kegiatan'];  
       $berita_kegiatan = $_POST['berita_kegiatan']; 
       // $file_bukti = $_POST['file_bukti'];   
       
@@ -73,14 +73,14 @@ if(isset($_POST['Edit'])) {
       $berita_kegiatan = $_POST['berita_kegiatan']; 
       $file_bukti_lama = $_POST['file_bukti_lama']; 
       $userpic = $_POST['file_bukti_lama']; 
-      $status = $_POST['status']; 
+      $status_kegiatan = $_POST['status_kegiatan']; 
       $nilai = $_POST['nilai']; 
       
         $imgFile = $_FILES['file_bukti']['name'];
         $tmp_dir = $_FILES['file_bukti']['tmp_name'];
         $imgSize = $_FILES['file_bukti']['size'];
         
-        if($imgFile){ 
+        if($imgFile){
            $upload_dir = 'uploads/kegiatan/'; // upload directory
          
            $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
@@ -108,7 +108,7 @@ if(isset($_POST['Edit'])) {
            }  
            }  
       
-        $mySql = "UPDATE  kegiatan SET  tanggal_kegiatan=?, judul_kegiatan=?, nilai=?, berita_kegiatan=?, file_bukti=?, status=? WHERE id=? ";
+        $mySql = "UPDATE  kegiatan SET  tanggal_kegiatan=?, judul_kegiatan=?, nilai=?, berita_kegiatan=?, file_bukti=?, status_kegiatan=? WHERE id=? ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($mySql);
@@ -117,7 +117,7 @@ if(isset($_POST['Edit'])) {
         $stmt->bindParam(3, $nilai); 
         $stmt->bindParam(4, $berita_kegiatan);
         $stmt->bindParam(5, $userpic);
-        $stmt->bindParam(6, $status); 
+        $stmt->bindParam(6, $status_kegiatan); 
         $stmt->bindParam(7, $id); 
        $stmt->execute();
    
@@ -312,7 +312,7 @@ if(isset($_POST['Non-Aktif'])) {
                 <!-- Modal content-->
                 <div class="modal-content"> 
                   <div class="modal-header">
-                    <h5 class="modal-title" id="anggotaModalLabel">Update Data Pengalaman <?php echo $nama; ?></h5>
+                    <h5 class="modal-title" id="anggotaModalLabel">Update Data Kegiatan <?php echo $nama; ?></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -324,11 +324,11 @@ if(isset($_POST['Non-Aktif'])) {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="file_bukti_lama" value="<?php echo $file_bukti; ?>">
                           <div class="form-group row">
-                          <div class="col-md-6">
-                            <label for="judul_kegiatan" class="col-form-label">kegiatan</label>
+                          <div class="col-md-8">
+                            <label for="judul_kegiatan" class="col-form-label">Judul kegiatan</label>
                             <input type="text" class="form-control" id="judul_kegiatan" value="<?php echo $judul_kegiatan; ?>" name="judul_kegiatan">
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <label for="tanggal_kegiatan" class="col-form-label">Tanggal kegiatan</label>
                             <input type="date"  value="<?php echo $tanggal_kegiatan; ?>"  class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan">
                           </div>
@@ -343,10 +343,12 @@ if(isset($_POST['Non-Aktif'])) {
                           <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai">
                           </div>
                           <div class="col-md-4">
-                            <label for="status" class="col-form-label">Status Verifikasi</label>
-                            <select class="form-control" name="status">
-                            <option value="1" <?php if($status==1) {echo "selected";}?> > Aktif</option>
-                            <option value="0" <?php if($status==0) {echo "selected";}?> > Pending</option>
+                            <label for="status_kegiatan" class="col-form-label">Status Verifikasi</label>
+                            <select class="form-control" name="status_kegiatan">
+                            <option value="1" <?php if($status_kegiatan=='Pending') {echo "selected";}?> > Pending</option>
+                            <option value="0" <?php if($status_kegiatan=='Diterima') {echo "selected";}?> > Diterima</option>
+                            <option value="0" <?php if($status_kegiatan=='Dipublish') {echo "selected";}?> > Dipublish</option>
+                            <option value="0" <?php if($status_kegiatan=='Diarsip') {echo "selected";}?> > Diarsip</option>
                             </select>
                           </div>
                           </div>   
@@ -357,7 +359,7 @@ if(isset($_POST['Non-Aktif'])) {
                           </div> 
                           <div class="form-group">
                             <label for="berita_kegiatan" class="col-form-label">Berita kegiatan</label>
-                            <input type="text" class="form-control" id="berita_kegiatan" value="<?php echo $berita_kegiatan; ?>" name="berita_kegiatan">
+                            <textarea class="form-control" id="berita_kegiatan"  name="berita_kegiatan"><?php echo $berita_kegiatan; ?></textarea>
                           </div>
                           
                         <div class="modal-footer">  
