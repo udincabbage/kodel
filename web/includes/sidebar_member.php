@@ -25,6 +25,12 @@
 
       <!-- Nav Pendidikan -->
       <li class="nav-item">
+        <a class="nav-link" href="kegiatanku">
+          <i class="fas fa-fw fa-graduation-cap"></i>
+          <span>Kegiatan</span></a>
+      </li> 
+      <!-- Nav Pendidikan -->
+      <li class="nav-item">
         <a class="nav-link" href="pendidikanku">
           <i class="fas fa-fw fa-graduation-cap"></i>
           <span>Pendidikan</span></a>

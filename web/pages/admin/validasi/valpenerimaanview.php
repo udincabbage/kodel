@@ -26,10 +26,8 @@ if(
     $fakultas = $_POST['fakultas'];
     $program_studi = $_POST['program_studi'];
     $motivasi = $_POST['motivasi'];
-    $status_anggota = "Aktif";
-
-    if(isset($_POST['foto'])) {
-      $foto = $POST['foto'];
+    $status_anggota = "Aktif"; 
+      $foto = $_POST['foto'];
 
       try {
         $database = new Database();
@@ -98,14 +96,7 @@ if(
          <?php
           $db->rollBack();
       }
-    }else{
-      ?>
-      <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Foto belum ada</strong>
-      </div>
-      <?php
-    }
+      
   }
 
   if(isset($_POST['Edit'])) {
@@ -363,15 +354,20 @@ if(
                           <input type="hidden" name="id" value="<?php echo $id; ?>">
                           <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
 
+                          <div class="form-group row d-flex justify-content-center">
+                          <img src="uploads/avatar/<?php echo $foto; ?>" height="100">
+                           </div>
+                          <input type="hidden" class="form-control"  value="<?php echo $foto; ?>" id="foto" name="foto">
+                          
                           <div class="form-group row">
                             <div class="col-md-6">
                               <label for="no_anggota" class="col-form-label">No Anggota</label>
                               <?php
                               $yy = substr(date('Y'),2,2);
-                              $yy_cari = $yy."%";
+                              $yy_cari = "630305.".$yy."%";
 
 
-                              $no_anggota_baru = $yy." 0001";
+                              $no_anggota_baru = $yy.".0001";
 
                               $mySql = "SELECT A.no_anggota FROM anggota A WHERE  no_anggota like ? ORDER BY no_anggota DESC";
                               $stmt_cek_no_anggota = $db->prepare($mySql);
@@ -383,10 +379,10 @@ if(
                                 $no_anggota_terakhir = $row_cek_anggota['no_anggota'];
                                 $no_anggota_terakhir_dipotong = substr($no_anggota_terakhir,4,4);
                                 $no_anggota_baru_int = intval($no_anggota_terakhir_dipotong)+1;
-                                $no_anggota_baru = $yy." ".str_pad($no_anggota_baru_int, 4, '0', STR_PAD_LEFT);;
+                                $no_anggota_baru = $yy.".".str_pad($no_anggota_baru_int, 4, '0', STR_PAD_LEFT);;
                               }
                               ?>
-                              <input type="text" class="form-control" id="no_anggota" value="<?php echo $no_anggota_baru ?>" name="no_anggota" required/>
+                              <input type="text" class="form-control" id="no_anggota" value="630305.<?php echo $no_anggota_baru ?>" name="no_anggota" required/>
                             </div>
                             <div class="col-md-6">
                               <label for="tanggal_gabung" class="col-form-label">Tanggal Bergabung</label>
@@ -487,8 +483,7 @@ if(
                           <div class="form-group">
                             <label for="motivasi" class="col-form-label"> Motivasi </label>
                             <textarea class="form-control" id="motivasi" name="motivasi"> <?php echo $motivasi; ?> </textarea>
-                          </div>
-
+                          </div> 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <button type="submit" name="Simpan" class="btn btn-success">Simpan</button>
@@ -518,6 +513,7 @@ if(
                           <input type="hidden" name="id" value="<?php echo $id; ?>">
                           <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
                           <input type="hidden" name="nama" value="<?php echo $nama; ?>">
+                          <input type="hidden" name="foto" value="<?php echo $foto; ?>">
                           <div class="form-group">
                             Yakin menghapus data ini? baik data pengguna maupun data anggota dan data lain yang berkaitan dengan anggota ini akan dihapus?
                           </div>
@@ -532,39 +528,7 @@ if(
                   </div>
                 </div>
                 <!-- end delete modal -->
-                <!-- foto modal -->
-                <div class="modal fade" id="fotoModal<?php echo $id; ?>" role="dialog">
-                  <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="fotoModalLabel">Upload Foto Anggota <?php echo $nama; ?></h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <form method='post' action='' enctype="multipart/form-data">
-                          <input type="hidden" name="id" value="<?php echo $id; ?>">
-                          <input type="hidden" name="id_pengguna" value="<?php echo $id_pengguna; ?>">
-                          <input type="hidden" name="nama" value="<?php echo $nama; ?>">
-                          <!-- Form -->
-                          Select file : <input type='file' name='file' id='file' class='form-control' ><br>
-                          <input type='button' class='btn btn-info' value='Upload' id='btn_upload'>
-
-                          <!-- Preview-->
-                          <div id='preview'></div>
-
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="Foto" class="btn btn-success">Simpan</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end delete modal -->
+                
 
               <?php  }
             }

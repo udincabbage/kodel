@@ -82,6 +82,10 @@ if(isset($_GET['p'])){
         		if(!file_exists ('pages/admin/validasi/valpengalaman.php')) die ($nopage);
 				include "pages/admin/validasi/valpengalaman.php";
 				break;
+		case 'valkegiatan':
+        		if(!file_exists ('pages/admin/validasi/valkegiatan.php')) die ($nopage);
+				include "pages/admin/validasi/valkegiatan.php";
+				break;
 
 			//ampun guest
 		case 'permohonan':

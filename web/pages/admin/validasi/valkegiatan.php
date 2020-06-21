@@ -43,7 +43,7 @@
         if(!isset($errMSG))
         {
         
-        $mySql = "INSERT INTO `kegiatan`(`status`, `id_anggota`, `tanggal_kegiatan`, `judul_kegiatan`, `berita_kegiatan`, `file_bukti`, `status_kegiatan`) VALUES ('1',?,?,?,?,?,'Diterima') ";
+        $mySql = "INSERT INTO `kegiatan`(`status`, `id_anggota`, `tanggal_kegiatan`, `judul_kegiatan`, `berita_kegiatan`, `file_bukti`) VALUES ('1',?,?,?,?,?) ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($mySql);
@@ -57,7 +57,7 @@
            ?>
            <div class="alert alert-success" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Tambah Data Berhasil!</strong> kegiatan  <?php echo $judul_kegiatan; ?> telah ditambahkan!
+  <strong>Tambah Data Berhasil!</strong> Kegiatan  <?php echo $judul_kegiatan; ?> telah ditambahkan!
 </div>
 <?php 
         } 
@@ -73,14 +73,14 @@ if(isset($_POST['Edit'])) {
       $berita_kegiatan = $_POST['berita_kegiatan']; 
       $file_bukti_lama = $_POST['file_bukti_lama']; 
       $userpic = $_POST['file_bukti_lama']; 
-      $status_kegiatan = $_POST['status_kegiatan']; 
+      $status = $_POST['status']; 
       $nilai = $_POST['nilai']; 
       
         $imgFile = $_FILES['file_bukti']['name'];
         $tmp_dir = $_FILES['file_bukti']['tmp_name'];
         $imgSize = $_FILES['file_bukti']['size'];
         
-        if($imgFile){
+        if($imgFile){ 
            $upload_dir = 'uploads/kegiatan/'; // upload directory
          
            $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
@@ -108,7 +108,7 @@ if(isset($_POST['Edit'])) {
            }  
            }  
       
-        $mySql = "UPDATE  kegiatan SET  tanggal_kegiatan=?, judul_kegiatan=?, nilai=?, berita_kegiatan=?, file_bukti=?, status_kegiatan=? WHERE id=? ";
+        $mySql = "UPDATE  kegiatan SET  tanggal_kegiatan=?, judul_kegiatan=?, nilai=?, berita_kegiatan=?, file_bukti=?, status=? WHERE id=? ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($mySql);
@@ -117,7 +117,7 @@ if(isset($_POST['Edit'])) {
         $stmt->bindParam(3, $nilai); 
         $stmt->bindParam(4, $berita_kegiatan);
         $stmt->bindParam(5, $userpic);
-        $stmt->bindParam(6, $status_kegiatan); 
+        $stmt->bindParam(6, $status); 
         $stmt->bindParam(7, $id); 
        $stmt->execute();
    
@@ -125,7 +125,7 @@ if(isset($_POST['Edit'])) {
    ?>
    <div class="alert alert-success" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Edit Data Berhasil!</strong> kegiatan dengan ID = <?php echo $id; ?>, oleh anggota  <?php echo $nama; ?> telah dirubah!
+  <strong>Edit Data Berhasil!</strong> Kegiatan dengan ID = <?php echo $id; ?>, oleh anggota  <?php echo $nama; ?> telah dirubah!
 </div>
 <?php 
     } 
@@ -176,7 +176,7 @@ if(isset($_POST['Aktif'])) {
     ?>
    <div class="alert alert-success" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Ubah Status Berhasil!</strong> kegiatan oleh <?php echo $nama; ?> telah di Aktifkan!
+  <strong>Ubah Status Berhasil!</strong> Kegiatan oleh <?php echo $nama; ?> telah di Aktifkan!
 </div>
 <?php 
     }  
@@ -187,7 +187,7 @@ if(isset($_POST['Non-Aktif'])) {
       $id_anggota = $_POST['id_anggota']; 
       $nama = $_POST['nama'];  
       
-      $mySql = "UPDATE kegiatan SET status_kegiatan='Diarsip' WHERE id=? ";
+      $mySql = "UPDATE kegiatan SET status=0 WHERE id=? ";
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($mySql);
@@ -198,7 +198,7 @@ if(isset($_POST['Non-Aktif'])) {
     ?>
    <div class="alert alert-success" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Ubah Status Berhasil!</strong> kegiatan oleh <?php echo $nama; ?> telah di Non-Aktifkan!
+  <strong>Ubah Status Berhasil!</strong> Kegiatan oleh <?php echo $nama; ?> telah di Non-Aktifkan!
 </div>
 <?php 
     } 
@@ -207,20 +207,15 @@ if(isset($_POST['Non-Aktif'])) {
            
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Data kegiatan</h1>
+          <h1 class="h3 mb-2 text-gray-800">Data Kegiatan</h1>
       <div class="row">
         <div class="col-md-10">
-         <p class="mb-4">Data kegiatan merupakan data kegiatan dari seluruh anggota / kader yang ada pada aplikasi ini. Data yang kegiatan perlu proses verifikasi admin untuk dapat diterima sebagai kegiatan.</p> 
+         <p class="mb-4">Data Kegiatan merupakan data kegiatan dari seluruh anggota / kader yang ada pada aplikasi ini. Data yang kegiatan perlu proses verifikasi admin untuk dapat diterima sebagai kegiatan.</p> 
          
          <p> 
           </div>
            <div class="col-md-2">
-          <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#tambahModal">
-            <span class="icon ">
-              <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Tambah Data</span>
-          </a>
+           
         </div>
       </div>
 
@@ -237,9 +232,9 @@ if(isset($_POST['Non-Aktif'])) {
                     <tr>
                       <th>No</th>
                       <th>Anggota</th>
-                      <th>Judul Kegiatan</th>
+                      <th>Kegiatan</th>
                       <th>Berita Kegiatan</th>
-                      <th>Tanggal Bukti</th>
+                      <th>Tanggal Kegiatan</th>
                       <th>File Bukti</th>
                       <th>Nilai</th>
                       <th>Status</th>
@@ -252,8 +247,8 @@ if(isset($_POST['Non-Aktif'])) {
                   <?php 
 				 // echo $id;
 				$Sql2 = "SELECT kegiatan.*, anggota.id AS id_anggota, anggota.nama FROM kegiatan LEFT JOIN anggota ON anggota.id=kegiatan.id_anggota 
-              WHERE kegiatan.status=1 
-              ORDER BY updated_at DESC ";
+                WHERE kegiatan.status=0 
+                ORDER BY updated_at DESC ";
 				$database = new Database();
 				$db = $database->getConnection();
 				$stmt2 = $db->prepare($Sql2);
@@ -264,14 +259,14 @@ if(isset($_POST['Non-Aktif'])) {
 				if($num==0){
 					?>
 					<tr>
-						<td colspan="9">Data Tidak Ada</td>
+						<td colspan="4">Data Tidak Ada</td>
 					</tr>
 					<?php
 				} else {
 					while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
 					extract($row2); 
-					// if($status==1) { $statusx = 'Diterima';} 
-                    // else { $statusx ='Pending';}
+					if($status==1) { $statusx = 'Aktif';} 
+                    else { $statusx ='Pending';}
 				?> 
                     <tr>
 					<td><?php echo $no++; ?></td>  
@@ -286,7 +281,7 @@ if(isset($_POST['Non-Aktif'])) {
 					<td><?php echo indonesiaTgl($tanggal_kegiatan); ?></td>  
 					<td align="center"><a href="uploads/kegiatan/<?php echo $file_bukti; ?>" target="_blank"><img src="uploads/kegiatan/<?php echo $file_bukti ? $file_bukti : 'noimage.png'; ?>" width="50px"></a></td> 
                     <td><?php echo $nilai; ?></td>
-					<td><?php echo $status_kegiatan; ?></td>   
+					<td><?php echo $statusx; ?></td>   
                     <td>
                     <?php if($status==1) { ?>
                        <a href="#" type="button" class="btn btn-warning btn-icon-split"  data-toggle="modal" data-target="#verifModal<?php echo $id; ?>">
@@ -324,11 +319,11 @@ if(isset($_POST['Non-Aktif'])) {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="file_bukti_lama" value="<?php echo $file_bukti; ?>">
                           <div class="form-group row">
-                          <div class="col-md-8">
-                            <label for="judul_kegiatan" class="col-form-label">Judul kegiatan</label>
+                          <div class="col-md-6">
+                            <label for="judul_kegiatan" class="col-form-label">kegiatan</label>
                             <input type="text" class="form-control" id="judul_kegiatan" value="<?php echo $judul_kegiatan; ?>" name="judul_kegiatan">
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-6">
                             <label for="tanggal_kegiatan" class="col-form-label">Tanggal kegiatan</label>
                             <input type="date"  value="<?php echo $tanggal_kegiatan; ?>"  class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan">
                           </div>
@@ -343,12 +338,10 @@ if(isset($_POST['Non-Aktif'])) {
                           <input type="number" class="form-control"  value="<?php echo $nilai; ?>" step="1" min="1" max="5" id="nilai" name="nilai">
                           </div>
                           <div class="col-md-4">
-                            <label for="status_kegiatan" class="col-form-label">Status Verifikasi</label>
-                            <select class="form-control" name="status_kegiatan">
-                            <option value="Pending" <?php if($status_kegiatan=='Pending') {echo "selected";}?> > Pending</option>
-                            <option value="Diterima" <?php if($status_kegiatan=='Diterima') {echo "selected";}?> > Diterima</option>
-                            <option value="Dipublish" <?php if($status_kegiatan=='Dipublish') {echo "selected";}?> > Dipublish</option>
-                            <option value="Diarsip" <?php if($status_kegiatan=='Diarsip') {echo "selected";}?> > Diarsip</option>
+                            <label for="status" class="col-form-label">Status Verifikasi</label>
+                            <select class="form-control" name="status">
+                            <option value="1" <?php if($status==1) {echo "selected";}?> > Aktif</option>
+                            <option value="0" <?php if($status==0) {echo "selected";}?> > Pending</option>
                             </select>
                           </div>
                           </div>   
@@ -358,8 +351,8 @@ if(isset($_POST['Non-Aktif'])) {
                           </center>  
                           </div> 
                           <div class="form-group">
-                            <label for="berita_kegiatan" class="col-form-label">Berita kegiatan</label>
-                            <textarea class="form-control" id="berita_kegiatan"  name="berita_kegiatan"><?php echo $berita_kegiatan; ?></textarea>
+                            <label for="berita_kegiatan" class="col-form-label">Berita Kegiatan</label>
+                            <input type="text" class="form-control" id="berita_kegiatan" value="<?php echo $berita_kegiatan; ?>" name="berita_kegiatan">
                           </div>
                           
                         <div class="modal-footer">  
@@ -378,7 +371,7 @@ if(isset($_POST['Non-Aktif'])) {
                 <!-- Modal content-->
                 <div class="modal-content"> 
                   <div class="modal-header">
-                    <h5 class="modal-title" id="anggotaModalLabel">Hapus Data kegiatan <?php echo $nama; ?></h5>
+                    <h5 class="modal-title" id="anggotaModalLabel">Hapus Data Kegiatan <?php echo $nama; ?></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -409,7 +402,7 @@ if(isset($_POST['Non-Aktif'])) {
                 <!-- Modal content-->
                 <div class="modal-content"> 
                   <div class="modal-header">
-                    <h5 class="modal-title" id="anggotaModalLabel">Verifikasi Data kegiatan <?php echo $nama; ?></h5>
+                    <h5 class="modal-title" id="anggotaModalLabel">Verifikasi Data Kegiatan <?php echo $nama; ?></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -420,7 +413,7 @@ if(isset($_POST['Non-Aktif'])) {
                         <input type="hidden" name="id_anggota" value="<?php echo $id_anggota; ?>">
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <div class="form-group">
-                          yakin merubah Status Verifikasi menjadi <?php  if($status==1) { echo "Tidak "; } ?> Aktif?     
+                          yakin merubah Status Verifikasi menjadi <?php  if($status==1) { echo "Tidak "; } ?>Aktif?     
                         </div> 
                          <?php  if($status==0) {  ?> 
                          <label for="nilai" class="col-form-label">Nilai <i>(Berikan nilai 1 - 5) </i></label>
@@ -469,7 +462,7 @@ if(isset($_POST['Non-Aktif'])) {
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body"><p>Tambahkan data kegiatan, data kegiatan yang diinput pada form ini akan langsung berstatus Diterima.</p>
+        <div class="modal-body"><p>Tambahkan data Kegiatan, data kegiatan yang diinput pada form ini akan langsung berstatus aktif.</p>
            <form>
           <div class="form-group row">
           <div class="col-md-8">
@@ -496,7 +489,7 @@ if(isset($_POST['Non-Aktif'])) {
           </div>
           <div class="form-group row">
           <div class="col-md-8">
-            <label for="judul_kegiatan" class="col-form-label">Judul kegiatan</label>
+            <label for="judul_kegiatan" class="col-form-label">Nama kegiatan</label>
             <input type="text" class="form-control" id="judul_kegiatan" name="judul_kegiatan">
           </div> 
           <div class="col-md-4">
@@ -510,7 +503,7 @@ if(isset($_POST['Non-Aktif'])) {
           </center>  
           </div>  
           <div class="form-group"> 
-            <label for="berita_kegiatan" class="col-form-label">Keterangan</label>
+            <label for="berita_kegiatan" class="col-form-label">Berita Kegiatan</label>
             <textarea class="form-control" id="berita_kegiatan" name="berita_kegiatan"></textarea>
           </div>  
         

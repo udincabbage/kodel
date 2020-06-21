@@ -83,6 +83,9 @@ if(isset($_POST['insert_tes_tertulis'])){
                 <span>JAWABAN : </span>
                 <input type="hidden" name="id_pengguna_soal_<?php echo $row['id'] ?>" value="<?php echo $row['id'] ?>">
                 <input type="hidden" name="answer_<?php echo $row['id'] ?>" value="<?php echo $row['answer'] ?>">
+                
+                <div class="form-group row">
+                <div class="col-md-4">
                 <select  class="form-control float-right"  id='jawaban'  name='jawaban_<?php echo $row['id'] ?>' >
                   <option value='kosong' <?php if($row['jawaban']=='kosong') { echo 'Selected'; } ?>>  </option>
                   <option value='a' <?php if($row['jawaban']=='a') { echo 'Selected'; } ?>> A </option>
@@ -90,13 +93,17 @@ if(isset($_POST['insert_tes_tertulis'])){
                   <option value='c' <?php if($row['jawaban']=='c') { echo 'Selected'; } ?>> C </option>
                   <option value='d' <?php if($row['jawaban']=='d') { echo 'Selected'; } ?>> D </option>
                   <option value='e' <?php if($row['jawaban']=='e') { echo 'Selected'; } ?>> E </option>
-                </select><br>
-                <button type="submit" name="Simpan" id="Simpan" class="btn btn-success btn-icon-split float-right">
+                </select>
+                </div> 
+                <div class="col-md-6">
+                 <button type="submit" name="Simpan" id="Simpan" class="btn btn-success btn-icon-split float-left">
                   <span class="icon">
                     <i class="fas fa-save"></i>
                   </span>
                   <span class="text">Simpan</span>
-                </button>
+                </button> 
+                </div>
+                </div> 
                 <span class=>JAWABAN TERSIMPAN : <?php echo strtoupper($row['jawaban']) ?></span>
               </div>
             </div>

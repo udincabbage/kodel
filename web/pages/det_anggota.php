@@ -15,7 +15,6 @@ if(isset($_POST['id'])) {
  $id_anggota = $id;
 
 //cung
-
  // $no_anggota = $_POST['no_anggota'];
       // $tanggal_gabung = $_POST['tanggal_gabung'];
       // $nama = $_POST['nama']; 

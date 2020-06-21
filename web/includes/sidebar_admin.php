@@ -38,6 +38,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Custom Components:</h6> -->
             <a class="collapse-item" href="valpenerimaanview">Penerimaan Kader</a>
+            <a class="collapse-item" href="valkegiatan">Kegiatan</a>
             <a class="collapse-item" href="valpendidikan">Pendidikan</a>
             <a class="collapse-item" href="valketerampilan">Keterampilan</a>
             <a class="collapse-item" href="valpengalaman">Pengalaman</a>
